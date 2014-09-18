@@ -56,7 +56,7 @@ class Lead {
 
 			// LEAD DATA
 			// echo '<h1>Lead</h1>';
-			var_dump( $this->lead );
+			// var_dump( $this->lead );
 
 			// STOP EXECUTION TO VIEW VAR DUMPS
 			// die;
