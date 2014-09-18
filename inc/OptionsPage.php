@@ -31,19 +31,19 @@ class OptionsPage {
 
 		// Check if option should be updated
 		if ( isset( $_POST['marketo-leads-options'] ) ) {
-			update_option( 'marketo-leads', base64_encode( serialize( array(
+			update_option( 'marketo-leads', $this->obfuscate( array(
 				'endpoint' => mysql_real_escape_string( $_POST['endpoint'] ),
 				'token'    => mysql_real_escape_string( $_POST['token'] ),
 				'url'    => mysql_real_escape_string( $_POST['url'] ),
-			) ) ) );
+			) ) );
 		}
 
 		// Get current values
-		$this->options = unserialize( base64_decode( get_option( 'marketo-leads', base64_encode( serialize( array(
+		$this->options = $this->deobfuscate( get_option( 'marketo-leads', $this->obfuscate( array(
 			'endpoint' => '',
 			'token'    => '',
 			'url'      => '/rest/v1/leads.json',
-		) ) ) ) ) );
+		) ) ) );
 
 	}
 
@@ -108,6 +108,36 @@ class OptionsPage {
 		</div>
 
 	<?php }
+
+	/**
+	 * obfuscate
+	 *
+	 * Obfuscates a variable in preparation for storage
+	 *
+	 * @param mixed $input Variable to be prepared
+	 * @return string String ready for storage
+	 */
+
+	private function obfuscate( $input ) {
+		$input = serialize( $input );
+		$input = base64_encode( $input );
+		return $input;
+	}
+
+	/**
+	 * deobfuscate
+	 *
+	 * Deobfuscates a variable retrieved from storage
+	 *
+	 * @param mixed $input Variable to be prepared
+	 * @return string String ready for storage
+	 */
+
+	private function deobfuscate( $input ) {
+		$input = base64_decode( $input );
+		$input = unserialize( $input );
+		return $input;
+	}
 
 }
 
