@@ -14,6 +14,10 @@
 require __DIR__ . '/../wp-utils/WPUtils.php';
 if ( !defined( 'WPUTILS' ) || version_compare( WPUTILS, '1.0.0' ) ) die( 'Marketo Leads requires WPUtils 1.0.0 or above' );
 
-// Includes
+// Libraries
+require __DIR__ . '/inc/API.php';
+
+// Objects
 require __DIR__ . '/inc/FieldsPostType.php';
 require __DIR__ . '/inc/OptionsPage.php';
+require __DIR__ . '/inc/Lead.php';
