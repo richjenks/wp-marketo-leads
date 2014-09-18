@@ -31,19 +31,19 @@ class OptionsPage {
 
 		// Check if option should be updated
 		if ( isset( $_POST['marketo-leads-options'] ) ) {
-			update_option( 'marketo-leads', serialize( array(
+			update_option( 'marketo-leads', base64_encode( serialize( array(
 				'endpoint' => mysql_real_escape_string( $_POST['endpoint'] ),
 				'token'    => mysql_real_escape_string( $_POST['token'] ),
 				'url'    => mysql_real_escape_string( $_POST['url'] ),
-			) ) );
+			) ) ) );
 		}
 
 		// Get current values
-		$this->options = unserialize( get_option( 'marketo-leads', serialize( array(
+		$this->options = unserialize( base64_decode( get_option( 'marketo-leads', base64_encode( serialize( array(
 			'endpoint' => '',
 			'token'    => '',
 			'url'      => '/rest/v1/leads.json',
-		) ) ) );
+		) ) ) ) ) );
 
 	}
 
