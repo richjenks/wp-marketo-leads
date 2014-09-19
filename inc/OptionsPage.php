@@ -91,6 +91,7 @@ class OptionsPage {
 				<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes"></p>
 			</form>
 			<h2>Getting Started</h2>
+			<p>WP Marketo Leads links a Marketo field with any number of form fields so when that field is submitted it is sent to Marketo as a lead.</p>
 			<ol>
 				<li>Follow Marketo's <a href="http://developers.marketo.com/blog/quick-start-guide-for-marketo-rest-api/" target="_blank">REST API Quick Start Guide</a> until you have determined the Endpoint URL</li>
 				<li>Enter values for fields above and Save Changes</li>
@@ -103,6 +104,12 @@ class OptionsPage {
 				<dt>Form field name(s)</dt>
 				<dd>The <code>name</code> or <code>id</code> attribute of the <code>input</code> element&thinsp;&mdash;&thinsp;found by inspecting the form's HTML</dd>
 			</dl>
+			<h3>Finding field <code>name</code>s (for non-technical people)</h3>
+			<ul>
+				<li>In Chrome, right-click on the form field and click <b>Inspect Element</b></li>
+				<li>In the bottom panel that appears, the selected line should look something like: <code>&lt;input type="text" name="<b>first_name</b>"&gt;</code></li>
+				<li>The value of the <code>name</code> attribute (in bold) is the name of the field element</li>
+			</ul>
 			<h2>Test Settings</h2>
 			<p class="submit"><a class="button button-primary">Run Tests</a></p>
 		</div>
