@@ -11,8 +11,11 @@
  */
 
 // WP Utils
-require __DIR__ . '/../wp-utils/WPUtils.php';
-if ( !defined( 'WPUTILS' ) || version_compare( WPUTILS, '1.0.0' ) ) die( 'Marketo Leads requires WPUtils 1.0.0 or above' );
+include_once __DIR__ . '/../wp-utils/WPUtils.php';
+if ( !defined( 'WPUTILS' ) || version_compare( WPUTILS, '1.0.0' ) ) {
+	add_action( 'admin_notices', function() { ?> <div class="error"><p>Marketo Leads requires WPUtils 1.0.0 or above</p></div> <?php } );
+	return;
+}
 
 // Libraries
 require __DIR__ . '/inc/API.php';
