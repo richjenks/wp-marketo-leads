@@ -32,11 +32,7 @@ class Lead {
 
 	public function __construct() {
 
-		if ( !empty( $_POST ) ) {
-
-			// POST DATA
-			// echo '<h1>$_POST</h1>';
-			// var_dump( $_POST );
+		if ( !empty( $_POST ) && !is_admin() ) {
 
 			// Get field posts
 			$posts = get_posts( array(
@@ -47,23 +43,40 @@ class Lead {
 			// Sanitize field data so it's usable
 			$this->fields = $this->sanitize_posts( $posts );
 
-			// FIELD DATA
-			// echo '<h1>Fields</h1>';
-			// var_dump( $this->fields );
-
 			// Construct Lead data
 			$this->lead = $this->construct_lead( $this->fields, $_POST );
 
-			// LEAD DATA
-			// echo '<h1>Lead</h1>';
-			// var_dump( $this->lead );
-
-			// STOP EXECUTION TO VIEW VAR DUMPS
-			// die;
+			// Debug?
+			// $this->debug();
 
 			// Push $this->lead to API
 
 		}
+
+	}
+
+	/**
+	 * debug
+	 *
+	 * Outputs data
+	 */
+
+	private function debug() {
+
+		// Post data
+		echo '<h1>$_POST</h1>';
+		var_dump( $_POST );
+
+		// Field data
+		echo '<h1>Fields</h1>';
+		var_dump( $this->fields );
+
+		// Lead data
+		echo '<h1>Lead</h1>';
+		var_dump( $this->lead );
+
+		// Stop execution to view before redirect
+		die;
 
 	}
 
