@@ -14,7 +14,7 @@ class FieldsPostType {
 	 * @var string Post Type
 	 */
 
-	private $post_type = 'marketoleads_fields';
+	private $post_type = 'rj_ml_cpt_fields';
 
 	/**
 	 * __construct
@@ -30,12 +30,13 @@ class FieldsPostType {
 			// Register post type
 			register_post_type( $this->post_type, $this->get_args() );
 
+			// WP Utils has been decomissioned until it's working with Composer
 			// Rename stuff
-			\WPUtils\Posts::rename( array(
-				'Enter title here' => 'Marketo Field',
-				'Title'            => 'Field',
-				'Excerpt'          => 'Form field name(s)',
-			), $this->post_type );
+			// \WPUtils\Posts::rename( array(
+			// 	'Enter title here' => 'Marketo Field',
+			// 	'Title'            => 'Field',
+			// 	'Excerpt'          => 'Form field name(s)',
+			// ), $this->post_type );
 
 		} );
 
@@ -91,20 +92,20 @@ class FieldsPostType {
 
 	private function get_labels() {
 		return array(
-			'name'               => _x( 'Fields', 'post type general name', 'your-plugin-textdomain' ),
-			'singular_name'      => _x( 'Field', 'post type singular name', 'your-plugin-textdomain' ),
-			'menu_name'          => _x( 'Marketo Leads', 'admin menu', 'your-plugin-textdomain' ),
-			'name_admin_bar'     => _x( 'Field', 'add new on admin bar', 'your-plugin-textdomain' ),
-			'add_new'            => _x( 'Add New', 'Field', 'your-plugin-textdomain' ),
-			'all_items'          => __( 'All Fields', 'your-plugin-textdomain' ),
-			'add_new_item'       => __( 'Add Field', 'your-plugin-textdomain' ),
-			'new_item'           => __( 'New Field', 'your-plugin-textdomain' ),
-			'edit_item'          => __( 'Edit Field', 'your-plugin-textdomain' ),
-			'view_item'          => __( 'View Field', 'your-plugin-textdomain' ),
-			'search_items'       => __( 'Search Fields', 'your-plugin-textdomain' ),
-			'parent_item_colon'  => __( 'Parent Field:', 'your-plugin-textdomain' ),
-			'not_found'          => __( 'No Fields found.', 'your-plugin-textdomain' ),
-			'not_found_in_trash' => __( 'No Fields found in Trash.', 'your-plugin-textdomain' ),
+			'name'               => _x( 'Fields', 'post type general name', 'richjenks_marketoleads' ),
+			'singular_name'      => _x( 'Field', 'post type singular name', 'richjenks_marketoleads' ),
+			'menu_name'          => _x( 'Marketo Leads', 'admin menu', 'richjenks_marketoleads' ),
+			'name_admin_bar'     => _x( 'Field', 'add new on admin bar', 'richjenks_marketoleads' ),
+			'add_new'            => _x( 'Add New', 'Field', 'richjenks_marketoleads' ),
+			'all_items'          => __( 'All Fields', 'richjenks_marketoleads' ),
+			'add_new_item'       => __( 'Add Field', 'richjenks_marketoleads' ),
+			'new_item'           => __( 'New Field', 'richjenks_marketoleads' ),
+			'edit_item'          => __( 'Edit Field', 'richjenks_marketoleads' ),
+			'view_item'          => __( 'View Field', 'richjenks_marketoleads' ),
+			'search_items'       => __( 'Search Fields', 'richjenks_marketoleads' ),
+			'parent_item_colon'  => __( 'Parent Field:', 'richjenks_marketoleads' ),
+			'not_found'          => __( 'No Fields found.', 'richjenks_marketoleads' ),
+			'not_found_in_trash' => __( 'No Fields found in Trash.', 'richjenks_marketoleads' ),
 		);
 	}
 

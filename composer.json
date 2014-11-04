@@ -1,0 +1,13 @@
+{
+    "require": {
+        "guzzlehttp/guzzle": "~5.0"
+    },
+    "config": {
+    	"vendor-dir": "app/vendor"
+    },
+    "autoload": {
+    	"psr-4": {
+    		"RichJenks\\MarketoLeads\\": "app/plugin"
+    	}
+    }
+}

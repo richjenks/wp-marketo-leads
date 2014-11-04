@@ -6,8 +6,6 @@
  * Grabs post data and field config then creates a lead
  */
 
-
-
 namespace RichJenks\MarketoLeads;
 
 class Lead {
@@ -37,7 +35,7 @@ class Lead {
 			// Get field posts
 			$posts = get_posts( array(
 				'posts_per_page' => PHP_INT_MAX,
-				'post_type'      => 'marketoleads_fields',
+				'post_type'      => 'rj_ml_cpt_fields',
 			) );
 
 			// Sanitize field data so it's usable
@@ -47,9 +45,10 @@ class Lead {
 			$this->lead = $this->construct_lead( $this->fields, $_POST );
 
 			// Debug?
-			// $this->debug();
+			$this->debug();
 
 			// Push $this->lead to API
+			$client = new \GuzzleHttp\Client;
 
 		}
 

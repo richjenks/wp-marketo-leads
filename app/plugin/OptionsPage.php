@@ -11,6 +11,12 @@ namespace RichJenks\MarketoLeads;
 class OptionsPage {
 
 	/**
+	 * @var string Post Type
+	 */
+
+	private $post_type = 'rj_ml_cpt_fields';
+
+	/**
 	 * @var array Options array
 	 */
 
@@ -26,7 +32,7 @@ class OptionsPage {
 
 		// Add submenu page
 		add_action( 'admin_menu', function() {
-			add_submenu_page( 'edit.php?post_type=marketoleads_fields', 'Marketo Leads Options', 'Options', 'manage_options', 'marketo-leads-options', array( $this, 'content' ) );
+			add_submenu_page( 'edit.php?post_type=' . $this->post_type, 'Marketo Leads Options', 'Options', 'manage_options', 'marketo-leads-options', array( $this, 'content' ) );
 		} );
 
 		// Check if option should be updated
