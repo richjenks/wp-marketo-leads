@@ -1,6 +1,5 @@
 === Marketo Leads ===
 Contributors: richjenks
-Donate link:
 Tags: marketo, marketo leads, crm
 Requires at least: 3.0.1
 Tested up to: 4.0
