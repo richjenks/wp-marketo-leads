@@ -30,13 +30,27 @@ class FieldsPostType {
 			// Register post type
 			register_post_type( $this->post_type, $this->get_args() );
 
-			// WP Utils has been decomissioned until it's working with Composer
-			// Rename stuff
-			// \WPUtils\Posts::rename( array(
-			// 	'Enter title here' => 'Marketo Field',
-			// 	'Title'            => 'Field',
-			// 	'Excerpt'          => 'Form field name(s)',
-			// ), $this->post_type );
+			// Is current page in
+			if ( $this->get_post_type() === $this->post_type ) {
+
+				// Rename Title column heading
+				add_filter( 'manage_' . $this->post_type . '_posts_columns', function ( $columns ) {
+					$columns['title'] = 'Field';
+					return $columns;
+				} );
+
+				// Others
+				add_filter( 'gettext', function( $translation, $text ) {
+					$strings = array(
+						'Enter title here' => 'Marketo field',
+						'Excerpt'          => 'Form fields',
+						'Excerpts are optional hand-crafted summaries of your content that can be used in your theme. <a href="http://codex.wordpress.org/Excerpt" target="_blank">Learn more about manual excerpts.</a>' => '<code>name</code> or <code>id</code> of form field in HTML. One per line, spaces are ignored. You can add a comment after a slash to remind you where the field came from, e.g. <code>field_name / Contact form</code>.',
+					);
+					foreach ( $strings as $old => $new ) if ( $text === $old ) return $new;
+					return $translation;
+				}, 10, 2 );
+
+			}
 
 		} );
 
@@ -109,6 +123,18 @@ class FieldsPostType {
 		);
 	}
 
-}
+	/**
+	 * get_post_type
+	 *
+	 * @return string Post type for the current page in admin
+	 */
 
-new FieldsPostType;
+	private function get_post_type() {
+		if ( isset( $_GET['post_type'] ) ) {
+			return $_GET['post_type'];
+		} elseif ( isset( $_GET['post'] ) ) {
+			return get_post_type( $_GET['post'] );
+		}
+	}
+
+}

@@ -1,33 +1,31 @@
 # Marketo Leads
 
-Allows WordPress forms to create leads within Marketo.
+Create a lead in Marketo from any form!
 
-## Requirements
-
-- PHP >=5.3.3
-- cURL
+*Requires >=PHP 5.3.3*
 
 ## Usage
 
-WP Marketo Leads links a Marketo field with any number of form fields so when that field is submitted it is sent to Marketo as part of a lead.
+Link a Marketo field with any number of form fields so that when that field is submitted it is sent to Marketo:
 
 - Follow Marketo's [REST API Quick Start Guide](http://developers.marketo.com/blog/quick-start-guide-for-marketo-rest-api/)
-- Enter API details into `Admin > Marketo Leads > Options` and save
-- Click Add New for Marketo Leads
-
+- Enter API details into `WP Admin > Marketo Leads > Options` and save
+- Click `Add New`
 
 ### Definitions
 
-- **Title** is the Marketo field (Marketo > Admin > Field Management > Export Field Names)
-- **Extract** holds the form field `name`s
+- **Marketo field** is the name of the field within Marketo (Marketo > Admin > Field Management > Export Field Names)
+- **Form fields** are the `name`s or `id`s of form field in HTML (right-click on the field > Inspect Element)
 
-### Finding field `name`s (for non-technical people)
+### Finding form field `name`s/`id`s (for non-technical people)
 
-- In Chrome, right-click on the form field and click **Inspect Element**
+- With the form in your browser, right-click on the field > **Inspect Element**
 - In the bottom panel that appears, the selected line should look something like: `&lt;input type="text" name="first_name"&gt;`
-- The value of the `name` attribute (currently "first_name") is the name of the field element
+- The value of the `name` attribute ("first_name" in the example above) is the name of the field element
+
+*If the field with have no `name`, use its `id` instead.*
 
 ## Notes
 
 - Fields starting with `_wp` will be ignored
-- You can add a comment to a form field name (perhaps to remind you which form it's from) by adding a forward slash and your comment after the name. Note that spaces around the slash will be ignored. Example: `field_name / Contact form`
+- In the form fields box, you can add a comment after a slash to remind you where the field came from, e.g. `field_name / Contact form`.

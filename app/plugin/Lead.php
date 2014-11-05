@@ -8,10 +8,10 @@
 
 namespace RichJenks\MarketoLeads;
 
-class Lead {
+class Lead extends Options {
 
 	/**
-	 * @var array Field posts
+	 * @var array Field post data
 	 */
 
 	private $fields;
@@ -23,6 +23,12 @@ class Lead {
 	private $lead;
 
 	/**
+	 * @var array API options
+	 */
+
+	private $options;
+
+	/**
 	 * __construct
 	 *
 	 * Start the magic...
@@ -31,6 +37,9 @@ class Lead {
 	public function __construct() {
 
 		if ( !empty( $_POST ) && !is_admin() ) {
+
+			// Get API options
+			$this->options = $this->get_options();
 
 			// Get field posts
 			$posts = get_posts( array(
@@ -45,10 +54,28 @@ class Lead {
 			$this->lead = $this->construct_lead( $this->fields, $_POST );
 
 			// Debug?
-			$this->debug();
+			// $this->debug();
 
-			// Push $this->lead to API
-			$client = new \GuzzleHttp\Client;
+			// Is there a lead?
+			if ( count( $this->lead ) !== 0 ) {
+
+				// API Options
+				$options = array(
+					'client_id'     => $this->options['client_id'],
+					'client_secret' => $this->options['client_secret'],
+					'munchkin_id'   => $this->options['munchkin_id'],
+				);
+
+				// Create API client using Options class
+				$client = \CSD\Marketo\Client::factory( $options );
+
+				// Construct leads array (must be array of lead arrays for API)
+				$this->lead = array( $this->lead );
+
+				// Create the lead!
+				$client->createOrUpdateLeads( $this->lead, 'email' );
+
+			}
 
 		}
 
@@ -175,5 +202,3 @@ class Lead {
 	}
 
 }
-
-new Lead;
