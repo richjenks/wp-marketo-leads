@@ -37,6 +37,17 @@
 					<input type="text" class="regular-text" name="munchkin_id" placeholder="Munchkin ID" value="<?=$this->options['munchkin_id'];?>" required>
 				</td>
 			</tr>
+			<tr>
+				<th scope="row">
+					<label for="status">Status</label>
+				</th>
+				<td>
+					<select name="status" id="status">
+						<option <?php if ( $this->options['status'] === 'Disabled' ) echo 'selected'; ?>>Disabled</option>
+						<option <?php if ( $this->options['status'] === 'Enabled' ) echo 'selected'; ?>>Enabled</option>
+					</select>
+				</td>
+			</tr>
 		</table>
 		<input type="hidden" name="rj_ml_options_submitted">
 		<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes"></p>

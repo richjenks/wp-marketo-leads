@@ -41,39 +41,44 @@ class Lead extends Options {
 			// Get API options
 			$this->options = $this->get_options();
 
-			// Get field posts
-			$posts = get_posts( array(
-				'posts_per_page' => PHP_INT_MAX,
-				'post_type'      => 'rj_ml_cpt_fields',
-			) );
+			// Check if plugin is enabled
+			if ( $this->options['status'] === 'Enabled' ) {
 
-			// Sanitize field data so it's usable
-			$this->fields = $this->sanitize_posts( $posts );
+				// Get field posts
+				$posts = get_posts( array(
+					'posts_per_page' => PHP_INT_MAX,
+					'post_type'      => 'rj_ml_cpt_fields',
+				) );
 
-			// Construct Lead data
-			$this->lead = $this->construct_lead( $this->fields, $_POST );
+				// Sanitize field data so it's usable
+				$this->fields = $this->sanitize_posts( $posts );
 
-			// Debug?
-			// $this->debug();
+				// Construct Lead data
+				$this->lead = $this->construct_lead( $this->fields, $_POST );
 
-			// Is there a lead?
-			if ( count( $this->lead ) !== 0 ) {
+				// Debug?
+				// $this->debug();
 
-				// API Options
-				$options = array(
-					'client_id'     => $this->options['client_id'],
-					'client_secret' => $this->options['client_secret'],
-					'munchkin_id'   => $this->options['munchkin_id'],
-				);
+				// Is there a lead?
+				if ( count( $this->lead ) !== 0 ) {
 
-				// Create API client using Options class
-				$client = \CSD\Marketo\Client::factory( $options );
+					// API Options
+					$options = array(
+						'client_id'     => $this->options['client_id'],
+						'client_secret' => $this->options['client_secret'],
+						'munchkin_id'   => $this->options['munchkin_id'],
+					);
 
-				// Construct leads array (must be array of lead arrays for API)
-				$this->lead = array( $this->lead );
+					// Create API client using Options class
+					$client = \CSD\Marketo\Client::factory( $options );
 
-				// Create the lead!
-				$client->createOrUpdateLeads( $this->lead, 'email' );
+					// Construct leads array (must be array of lead arrays for API)
+					$this->lead = array( $this->lead );
+
+					// Create the lead!
+					$client->createOrUpdateLeads( $this->lead, 'email' );
+
+				}
 
 			}
 
