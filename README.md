@@ -20,7 +20,7 @@ Link a Marketo field with any number of form fields so that when that field is s
 ### Finding form field `name`s/`id`s (for non-technical people)
 
 - With the form in your browser, right-click on the field > **Inspect Element**
-- In the bottom panel that appears, the selected line should look something like: `&lt;input type="text" name="first_name"&gt;`
+- In the bottom panel that appears, the selected line should look something like: `<input type="text" name="first_name">`
 - The value of the `name` attribute ("first_name" in the example above) is the name of the field element
 
 *If the field with have no `name`, use its `id` instead.*
