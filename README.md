@@ -9,7 +9,7 @@ Create a lead in Marketo from any form!
 Link a Marketo field with any number of form fields so that when that field is submitted it is sent to Marketo:
 
 - Follow Marketo's [REST API Quick Start Guide](http://developers.marketo.com/blog/quick-start-guide-for-marketo-rest-api/)
-- Enter API details into `WP Admin > Marketo Leads > Options` and save
+- Enter API details into `WP Admin > Marketo Fields > Options` and save
 - Click `Add New`
 
 ### Definitions

@@ -106,10 +106,10 @@ class FieldsPostType {
 
 	private function get_labels() {
 		return array(
-			'name'               => _x( 'Fields', 'post type general name', 'richjenks_marketoleads' ),
-			'singular_name'      => _x( 'Field', 'post type singular name', 'richjenks_marketoleads' ),
-			'menu_name'          => _x( 'Marketo Leads', 'admin menu', 'richjenks_marketoleads' ),
-			'name_admin_bar'     => _x( 'Field', 'add new on admin bar', 'richjenks_marketoleads' ),
+			'name'               => _x( 'Marketo Fields', 'post type general name', 'richjenks_marketoleads' ),
+			'singular_name'      => _x( 'Marketo Field', 'post type singular name', 'richjenks_marketoleads' ),
+			'menu_name'          => _x( 'Marketo Fields', 'admin menu', 'richjenks_marketoleads' ),
+			'name_admin_bar'     => _x( 'Marketo Field', 'add new on admin bar', 'richjenks_marketoleads' ),
 			'add_new'            => _x( 'Add New', 'Field', 'richjenks_marketoleads' ),
 			'all_items'          => __( 'All Fields', 'richjenks_marketoleads' ),
 			'add_new_item'       => __( 'Add Field', 'richjenks_marketoleads' ),
