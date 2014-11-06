@@ -9,8 +9,8 @@
 ?>
 
 <div class="wrap">
-	<h2>Marketo Leads Options</h2>
-	<p>Follow Marketo's <a href="http://developers.marketo.com/blog/quick-start-guide-for-marketo-rest-api/" target="_blank">REST API Quick Start Guide</a> to setup a LaunchPoint service and get <code>Client ID</code> &amp; <code>Client Secret</code>, then go to the Munchkin settings page to get the <code>Munchkin ID</code>.</p>
+	<h2>Options</h2>
+	<p>Follow Marketo's <a href="http://developers.marketo.com/blog/quick-start-guide-for-marketo-rest-api/" target="_blank">REST API Quick Start Guide</a> to setup a LaunchPoint service and get <code>Client ID</code> &amp; <code>Client Secret</code>.<br>Then go to the Munchkin settings page to get the <code>Munchkin ID</code>.</p>
 	<form method="post">
 		<table class="form-table">
 			<tr>

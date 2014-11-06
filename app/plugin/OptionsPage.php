@@ -32,7 +32,7 @@ class OptionsPage extends Options {
 
 		// Add submenu page
 		add_action( 'admin_menu', function() {
-			add_submenu_page( 'edit.php?post_type=' . $this->post_type, 'Marketo Leads Options', 'Options', 'manage_options', 'rj_ml_options', array( $this, 'content' ) );
+			add_submenu_page( 'edit.php?post_type=' . $this->post_type, 'Options', 'Options', 'manage_options', 'rj_ml_options', array( $this, 'content' ) );
 		} );
 
 		// Check if options were submitted
