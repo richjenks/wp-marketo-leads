@@ -30,47 +30,19 @@ class FieldsPostType {
 			// Register post type
 			register_post_type( $this->post_type, $this->get_args() );
 
-			// Is current page in
-			if ( $this->get_post_type() === $this->post_type ) {
-
-				// Rename Title column heading
-				add_filter( 'manage_' . $this->post_type . '_posts_columns', function ( $columns ) {
-					$columns['title'] = 'Field';
-					return $columns;
-				} );
-
-				// Others
-				add_filter( 'gettext', function( $translation, $text ) {
-					$strings = array(
-						'Enter title here' => 'Marketo field',
-						'Excerpt'          => 'Form fields',
-						'Excerpts are optional hand-crafted summaries of your content that can be used in your theme. <a href="http://codex.wordpress.org/Excerpt" target="_blank">Learn more about manual excerpts.</a>' => '<code>name</code> or <code>id</code> of form field in HTML. One per line, spaces are ignored. You can add a comment after a slash to remind you where the field came from, e.g. <code>field_name / Contact form</code>.',
-					);
-					foreach ( $strings as $old => $new ) if ( $text === $old ) return $new;
-					return $translation;
-				}, 10, 2 );
-
-			}
-
 		} );
 
-		// Sanitize data on save
-		add_filter( 'wp_insert_post_data', function( $data , $postarr ) {
 
-			// Title
-			$data['post_title'] = trim( $data['post_title'] );
+		// Things specific to post type
+		if ( $this->get_post_type() === $this->post_type ) {
 
-			// Excerpt
-			$lines = explode( "\n", $data['post_excerpt'] );
-			foreach ( $lines as $key => $line ) {
-				$lines[ $key ] = trim( $line );
-				if ( $lines[ $key ] === '' ) unset( $lines[ $key ] );
-			}
-			$data['post_excerpt'] = implode( "\n", $lines);
+			// Rename things
+			$this->rename();
 
-			return $data;
+			// Sanitize data on save
+			$this->sanitize_save();
 
-		}, 99, 2 );
+		}
 
 	}
 
@@ -135,6 +107,60 @@ class FieldsPostType {
 		} elseif ( isset( $_GET['post'] ) ) {
 			return get_post_type( $_GET['post'] );
 		}
+	}
+
+	/**
+	 * rename
+	 *
+	 * Renames thing for post type
+	 */
+
+	private function rename() {
+
+		// Rename Title column heading
+		add_filter( 'manage_' . $this->post_type . '_posts_columns', function ( $columns ) {
+			$columns['title'] = 'Field';
+			return $columns;
+		} );
+
+		// Others
+		add_filter( 'gettext', function( $translation, $text ) {
+			$strings = array(
+				'Enter title here' => 'Marketo field',
+				'Excerpt'          => 'Form fields',
+				'Excerpts are optional hand-crafted summaries of your content that can be used in your theme. <a href="http://codex.wordpress.org/Excerpt" target="_blank">Learn more about manual excerpts.</a>' => '<code>name</code> or <code>id</code> of form field in HTML. One per line, spaces are ignored. You can add a comment after a slash to remind you where the field came from, e.g. <code>field_name / Contact form</code>.',
+			);
+			foreach ( $strings as $old => $new ) if ( $text === $old ) return $new;
+			return $translation;
+		}, 10, 2 );
+
+	}
+
+	/**
+	 * sanitize_save
+	 *
+	 * Sanitize data on save
+	 */
+
+	private function sanitize_save() {
+
+		add_filter( 'wp_insert_post_data', function( $data , $postarr ) {
+
+			// Title
+			$data['post_title'] = trim( $data['post_title'] );
+
+			// Excerpt
+			$lines = explode( "\n", $data['post_excerpt'] );
+			foreach ( $lines as $key => $line ) {
+				$lines[ $key ] = trim( $line );
+				if ( $lines[ $key ] === '' ) unset( $lines[ $key ] );
+			}
+			$data['post_excerpt'] = implode( "\n", $lines);
+
+			return $data;
+
+		}, 99, 2 );
+
 	}
 
 }
