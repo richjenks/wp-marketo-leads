@@ -1,0 +1,15 @@
+@font-face {
+	font-family: 'marketo';
+	src:url('marketo.eot?-wdabhg');
+	src:url('marketo.eot?#iefix-wdabhg') format('embedded-opentype'),
+		url('marketo.woff?-wdabhg') format('woff'),
+		url('marketo.ttf?-wdabhg') format('truetype'),
+		url('marketo.svg?-wdabhg#marketo') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.menu-icon-rj_ml_cpt_fields .wp-menu-image:before {
+	font-family: marketo !important;
+	content: "\e600" !important;
+}

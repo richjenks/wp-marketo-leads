@@ -24,14 +24,14 @@ class FieldsPostType {
 
 	public function __construct() {
 
-		// Init Actions
-		add_action( 'init', function() {
+		// Register post type
+		add_action( 'init', function() { register_post_type( $this->post_type, $this->get_args() );	} );
 
-			// Register post type
-			register_post_type( $this->post_type, $this->get_args() );
-
+		// Custom icon
+		add_action( 'admin_enqueue_scripts', function() {
+			wp_register_style( 'rj_ml_cpt_icon', \plugins_url() . '/wp-marketo-leads/app/assets/style.css', false, '1.0.0' );
+			wp_enqueue_style( 'rj_ml_cpt_icon' );
 		} );
-
 
 		// Things specific to post type
 		if ( $this->get_post_type() === $this->post_type ) {
