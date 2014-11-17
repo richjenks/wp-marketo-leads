@@ -18,11 +18,24 @@ class Options {
 
 	protected function get_options() {
 		$default = array(
+
+			// Marketo API
 			'client_id'     => '',
 			'client_secret' => '',
 			'munchkin_id'   => '',
-			'status'        => 'Disabled',
-			'debug'         => 'Disabled',
+
+			// Plugin Options
+			'status' => 'Disabled',
+			'debug'  => 'Disabled',
+
+			// Extra Fields
+			'fields' => array(
+				'current_url' => array(
+					'status'        => 'Disabled',
+					'marketo_field' => '',
+				),
+			),
+
 		);
 		return $this->deobfuscate( get_option( 'rj_ml_options', $this->obfuscate( $default ) ) );
 	}
@@ -34,13 +47,7 @@ class Options {
 	 */
 
 	protected function set_options( $options ) {
-		update_option( 'rj_ml_options', $this->obfuscate( array(
-			'client_id'     => $options['client_id'],
-			'client_secret' => $options['client_secret'],
-			'munchkin_id'   => $options['munchkin_id'],
-			'status'        => $options['status'],
-			'debug'         => $options['debug'],
-		) ) );
+		update_option( 'rj_ml_options', $this->obfuscate( $options ) );
 	}
 
 	/**

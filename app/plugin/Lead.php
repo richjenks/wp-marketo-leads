@@ -56,8 +56,11 @@ class Lead extends Options {
 				// Construct Lead data
 				$this->lead = $this->construct_lead( $this->fields, $_POST );
 
-				// Debug?
-				if ( $this->options['debug'] === 'Enabled' ) $this->debug();
+				// Show debug info?
+				if ( $this->options['debug'] === 'Enabled' ) {
+					require 'DebugView.php';
+					die;
+				}
 
 				// Is there a lead?
 				if ( count( $this->lead ) !== 0 ) {
@@ -87,34 +90,10 @@ class Lead extends Options {
 	}
 
 	/**
-	 * debug
-	 *
-	 * Outputs data
-	 */
-
-	private function debug() {
-
-		// Post data
-		echo '<h1>$_POST</h1>';
-		var_dump( $_POST );
-
-		// Field data
-		echo '<h1>Fields</h1>';
-		var_dump( $this->fields );
-
-		// Lead data
-		echo '<h1>Lead</h1>';
-		var_dump( $this->lead );
-
-		// Stop execution to view before redirect
-		die;
-
-	}
-
-	/**
 	 * sanitize_posts
 	 *
 	 * When given results of `get_posts` will return usable array
+	 * Note this is WordPress posts, not $_POST data
 	 *
 	 * @param array $posts Results of `get_posts`
 	 * @return array Array of marketo_field => element_name
@@ -202,8 +181,47 @@ class Lead extends Options {
 
 		}
 
+		// Add extra fields to lead — submitted values take priority!
+		$lead = array_merge( $this->get_extra_fields( $this->options['fields'], $_POST ), $lead );
+
 		return $lead;
 
+	}
+
+	/**
+	 * get_extra_fields
+	 *
+	 * Constructs array of extra fields to be added to lead data
+	 *
+	 * @param array $fields Extra fields configured in Options
+	 * @param array $post   $_POST array
+	 *
+	 * @return array Array of extra fields, key being Marketo field
+	 */
+
+	private function get_extra_fields( $fields, $post ) {
+		$extra_fields = array();
+		foreach ( $fields as $field => $field_options )
+			if ( $field_options['status'] === 'Enabled' )
+				$extra_fields[ $field_options['marketo_field'] ] = $this->get_extra_field_value( $field );
+		return $extra_fields;
+	}
+
+	/**
+	 * get_extra_field_value
+	 *
+	 * Determines the value of extra fields which all have bespoke purpose
+	 *
+	 * @param string $field Name of extra field
+	 * @return string Value of custom field for this submission
+	 */
+
+	private function get_extra_field_value( $field ) {
+		switch ( $field ) {
+			case 'current_url':
+				$protocol  = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://' : 'https://';
+				return $protocol . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+		}
 	}
 
 }
