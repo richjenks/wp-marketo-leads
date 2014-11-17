@@ -43,14 +43,11 @@ class Options {
 
 		);
 
-		// Current options
+		// Get current options or default
 		$options = json_decode( get_option( 'rj_ml_options', json_encode( $default ) ) );
 
-		// Return object of merged properties
+		// Return object of merged properties (in case options were added)
 		return (object) array_merge( $default, (array) $options );
-
-		// Merge in case some are missing
-		// return ( is_array( $options ) ) ? array_merge( $default, $options ) : $default;
 
 	}
 

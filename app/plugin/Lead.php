@@ -182,7 +182,10 @@ class Lead extends Options {
 		}
 
 		// Add extra fields to lead — submitted values take priority!
-		$lead = array_merge( $this->get_extra_fields( $this->options->fields, $_POST ), $lead );
+		$lead = array_merge( $this->get_extra_fields( $this->options->fields ), $lead );
+
+		// Add global fields to lead — submitted values take priority!
+		$lead = array_merge( $this->get_global_fields( $this->options->global_fields ), $lead );
 
 		return $lead;
 
@@ -194,12 +197,10 @@ class Lead extends Options {
 	 * Constructs array of extra fields to be added to lead data
 	 *
 	 * @param array $fields Extra fields configured in Options
-	 * @param array $post   $_POST array
-	 *
 	 * @return array Array of extra fields, key being Marketo field
 	 */
 
-	private function get_extra_fields( $fields, $post ) {
+	private function get_extra_fields( $fields ) {
 		$extra_fields = array();
 		foreach ( $fields as $field => $field_options )
 			if ( $field_options->status === 'Enabled' )
@@ -222,6 +223,44 @@ class Lead extends Options {
 				$protocol  = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://' : 'https://';
 				return $protocol . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
 		}
+	}
+
+	/**
+	 * get_global_fields
+	 *
+	 * Constructs array of global fields to be added to lead data
+	 *
+	 * @param string $fields Value of global fields textarea in options page
+	 * @return array 'marketo_field' => 'field_value'
+	 */
+
+	private function get_global_fields( $fields ) {
+
+		$global_fields = array();
+
+		// Split lines
+		$fields = explode( "\n", $fields );
+
+		// Get keys and values
+		foreach ( $fields as $field ) {
+
+			// Check line contains pipe
+			if ( strpos( $field, '|' ) !== false ) {
+
+				$parts = explode( '|', $field );
+				$parts[0] = trim( $parts[0] );
+				$parts[1] = trim( $parts[1] );
+
+				// Only store if both key and value aren't empty
+				if ( $parts[0] !== '' && $parts[1] !== '' )
+					$global_fields[ $parts[0] ] = $parts[1];
+
+			}
+
+		}
+
+		return $global_fields;
+
 	}
 
 }
