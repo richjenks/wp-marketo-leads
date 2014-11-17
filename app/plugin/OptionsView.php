@@ -19,7 +19,7 @@
 					<label for="client_id">Client ID</label>
 				</th>
 				<td>
-					<input type="text" class="regular-text" name="client_id" placeholder="Client ID" value="<?=$this->options['client_id'];?>" required>
+					<input type="text" class="regular-text" name="client_id" placeholder="Client ID" value="<?=$this->options->client_id;?>" required>
 				</td>
 			</tr>
 			<tr>
@@ -27,7 +27,7 @@
 					<label for="client_secret">Client Secret</label>
 				</th>
 				<td>
-					<input type="text" class="regular-text" name="client_secret" placeholder="Client Secret" value="<?=$this->options['client_secret'];?>" required>
+					<input type="text" class="regular-text" name="client_secret" placeholder="Client Secret" value="<?=$this->options->client_secret;?>" required>
 				</td>
 			</tr>
 			<tr>
@@ -35,7 +35,7 @@
 					<label for="munchkin_id">Munchkin ID</label>
 				</th>
 				<td>
-					<input type="text" class="regular-text" name="munchkin_id" placeholder="Munchkin ID" value="<?=$this->options['munchkin_id'];?>" required>
+					<input type="text" class="regular-text" name="munchkin_id" placeholder="Munchkin ID" value="<?=$this->options->munchkin_id;?>" required>
 				</td>
 			</tr>
 		</table>
@@ -48,8 +48,8 @@
 				</th>
 				<td>
 					<select name="status" id="status">
-						<option <?php if ( $this->options['status'] === 'Disabled' ) echo 'selected'; ?>>Disabled</option>
-						<option <?php if ( $this->options['status'] === 'Enabled' ) echo 'selected'; ?>>Enabled</option>
+						<option <?php if ( $this->options->status === 'Disabled' ) echo 'selected'; ?>>Disabled</option>
+						<option <?php if ( $this->options->status === 'Enabled' ) echo 'selected'; ?>>Enabled</option>
 					</select>
 					<p class="description">Whether the plugin sends leads to Marketo.</p>
 				</td>
@@ -60,8 +60,8 @@
 				</th>
 				<td>
 					<select name="debug" id="debug">
-						<option <?php if ( $this->options['debug'] === 'Disabled' ) echo 'selected'; ?>>Disabled</option>
-						<option <?php if ( $this->options['debug'] === 'Enabled' ) echo 'selected'; ?>>Enabled</option>
+						<option <?php if ( $this->options->debug === 'Disabled' ) echo 'selected'; ?>>Disabled</option>
+						<option <?php if ( $this->options->debug === 'Enabled' ) echo 'selected'; ?>>Enabled</option>
 					</select>
 					<p class="description">When enabled, shows debug information rather than sending data to Marketo.<br>Plugin Status must be Enabled for Debug Mode to work.</p>
 				</td>
@@ -77,15 +77,28 @@
 				</th>
 				<td>
 					<select name="fields[current_url][status]" id="fields[current_url][status]">
-						<option <?php if ( $this->options['fields']['current_url']['status'] === 'Disabled' ) echo 'selected'; ?>>Disabled</option>
-						<option <?php if ( $this->options['fields']['current_url']['status'] === 'Enabled' ) echo 'selected'; ?>>Enabled</option>
+						<option <?php if ( $this->options->fields->current_url->status === 'Disabled' ) echo 'selected'; ?>>Disabled</option>
+						<option <?php if ( $this->options->fields->current_url->status === 'Enabled' ) echo 'selected'; ?>>Enabled</option>
 					</select>
 				</td>
 				<th>
 					<label for="fields[current_url][marketo_field]">Marketo Field</label>:
 				</th>
 				<td>
-					<input type="text" class="regular-text" name="fields[current_url][marketo_field]" placeholder="Marketo Field" value="<?=$this->options['fields']['current_url']['marketo_field'];?>">
+					<input type="text" class="regular-text" name="fields[current_url][marketo_field]" placeholder="Marketo Field" value="<?=$this->options->fields->current_url->marketo_field;?>">
+				</td>
+			</tr>
+		</table>
+		<hr>
+		<h3>Global Fields</h3>
+		<p class="description">Fields to be sent with every lead. One per line, whitespace is ignored.<br>Marketo field and value separate by a pipe "|" character, e.g. "leadSource | website".</p>
+		<table class="form-table">
+			<tr>
+				<th scope="row">
+					<label for="global_fields">Global Fields</label>
+				</th>
+				<td>
+					<textarea rows="5" cols="50" name="global_fields" id="global_fields"><?=$this->options->global_fields;?></textarea>
 				</td>
 			</tr>
 		</table>

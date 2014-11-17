@@ -42,7 +42,7 @@ class Lead extends Options {
 			$this->options = $this->get_options();
 
 			// Check if plugin is enabled
-			if ( $this->options['status'] === 'Enabled' ) {
+			if ( $this->options->status === 'Enabled' ) {
 
 				// Get field posts
 				$posts = get_posts( array(
@@ -57,7 +57,7 @@ class Lead extends Options {
 				$this->lead = $this->construct_lead( $this->fields, $_POST );
 
 				// Show debug info?
-				if ( $this->options['debug'] === 'Enabled' ) {
+				if ( $this->options->debug === 'Enabled' ) {
 					require 'DebugView.php';
 					die;
 				}
@@ -67,9 +67,9 @@ class Lead extends Options {
 
 					// API Options
 					$options = array(
-						'client_id'     => $this->options['client_id'],
-						'client_secret' => $this->options['client_secret'],
-						'munchkin_id'   => $this->options['munchkin_id'],
+						'client_id'     => $this->options->client_id,
+						'client_secret' => $this->options->client_secret,
+						'munchkin_id'   => $this->options->munchkin_id,
 					);
 
 					// Create API client using Options class
@@ -182,7 +182,7 @@ class Lead extends Options {
 		}
 
 		// Add extra fields to lead — submitted values take priority!
-		$lead = array_merge( $this->get_extra_fields( $this->options['fields'], $_POST ), $lead );
+		$lead = array_merge( $this->get_extra_fields( $this->options->fields, $_POST ), $lead );
 
 		return $lead;
 
@@ -202,8 +202,8 @@ class Lead extends Options {
 	private function get_extra_fields( $fields, $post ) {
 		$extra_fields = array();
 		foreach ( $fields as $field => $field_options )
-			if ( $field_options['status'] === 'Enabled' )
-				$extra_fields[ $field_options['marketo_field'] ] = $this->get_extra_field_value( $field );
+			if ( $field_options->status === 'Enabled' )
+				$extra_fields[ $field_options->marketo_field ] = $this->get_extra_field_value( $field );
 		return $extra_fields;
 	}
 

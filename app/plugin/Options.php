@@ -17,6 +17,8 @@ class Options {
 	 */
 
 	protected function get_options() {
+
+		// Default options
 		$default = array(
 
 			// Marketo API
@@ -36,8 +38,20 @@ class Options {
 				),
 			),
 
+			// Global fields
+			'global_fields' => '',
+
 		);
-		return $this->deobfuscate( get_option( 'rj_ml_options', $this->obfuscate( $default ) ) );
+
+		// Current options
+		$options = json_decode( get_option( 'rj_ml_options', json_encode( $default ) ) );
+
+		// Return object of merged properties
+		return (object) array_merge( $default, (array) $options );
+
+		// Merge in case some are missing
+		// return ( is_array( $options ) ) ? array_merge( $default, $options ) : $default;
+
 	}
 
 	/**
@@ -47,39 +61,7 @@ class Options {
 	 */
 
 	protected function set_options( $options ) {
-		update_option( 'rj_ml_options', $this->obfuscate( $options ) );
-	}
-
-	/**
-	 * obfuscate
-	 *
-	 * Obfuscates a variable in preparation for storage
-	 *
-	 * @param mixed $input Variable to be prepared
-	 * @return string String ready for storage
-	 */
-
-	private function obfuscate( $input ) {
-		$input = serialize( $input );
-		$input = sanitize_text_field( $input );
-		$input = base64_encode( $input );
-		return $input;
-	}
-
-	/**
-	 * deobfuscate
-	 *
-	 * Deobfuscates a variable retrieved from storage
-	 *
-	 * @param mixed $input Variable to be prepared
-	 * @return string String ready for storage
-	 */
-
-	private function deobfuscate( $input ) {
-		$input = base64_decode( $input );
-		$input = sanitize_text_field( $input );
-		$input = unserialize( $input );
-		return $input;
+		update_option( 'rj_ml_options', json_encode( $options ) );
 	}
 
 }

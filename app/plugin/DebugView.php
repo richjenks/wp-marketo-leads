@@ -18,7 +18,7 @@
 <?php var_dump( $this->fields ); ?>
 
 <h1>Extra Fields</h1>
-<?php var_dump( $this->get_extra_fields( $this->options['fields'], $_POST ) ); ?>
+<?php var_dump( $this->get_extra_fields( $this->options->fields, $_POST ) ); ?>
 
 <h1>Lead Data</h1>
 <?php var_dump( $this->lead ); ?>
