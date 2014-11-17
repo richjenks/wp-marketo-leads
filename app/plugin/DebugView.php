@@ -6,23 +6,83 @@
  * HTML for debug information
  */
 
+// Sanitize options for viewing
+$this->options->client_secret = '[REDACTED]';
+unset( $this->options->submit );
+unset( $this->options->rj_ml_options_submitted );
+
 ?>
 
-<h1>Plugin Options</h1>
-<?php $this->options->client_secret = '[REDACTED]'; ?>
-<?php var_dump( $this->options ); ?>
+<style>
+* { font-family: sans-serif; }
+table { border-collapse: collapse; }
+td, th { vertical-align: top; text-align: left; padding: .5em; }
+tr:nth-child(odd) { background: #d6eef6; }
+</style>
 
-<h1>Post Data</h1>
-<?php var_dump( $_POST ); ?>
+<h1>Marketo Leads Debug Info</h1>
 
-<h1>Configured Fields</h1>
-<?php var_dump( $this->fields ); ?>
+<h2>Plugin Options</h2>
+<table>
+	<?php foreach ( $this->options as $option => $value ): ?>
+		<tr>
+			<th scope="row"><?= $option; ?></th>
+			<td><pre><?= ( is_string( $value ) ) ? $value : json_encode( (array) $value, JSON_PRETTY_PRINT ); ?></pre></td>
+		</tr>
+	<?php endforeach; ?>
+</table>
 
-<h1>Extra Fields</h1>
-<?php var_dump( $this->get_extra_fields( $this->options->fields ) ); ?>
+<h2>Post Data</h2>
+<table>
+	<?php foreach ( $_POST as $key => $value ): ?>
+		<tr>
+			<th scope="row"><?= $key; ?></th>
+			<td><pre><?= $value; ?></pre></td>
+		</tr>
+	<?php endforeach; ?>
+</table>
 
-<h1>Global Fields</h1>
-<?php var_dump( $this->get_global_fields( $this->options->global_fields ) ); ?>
+<h2>Configured Fields</h2>
+<table>
+	<?php foreach ( $this->fields as $key => $values ): ?>
+		<tr>
+			<th scope="row"><?= $key; ?></th>
+			<td><?php foreach ( $values as $value ) {
+				echo $value . '<br>';
+			} ?></td>
+		</tr>
+	<?php endforeach; ?>
+</table>
 
-<h1>Lead Data</h1>
-<?php var_dump( $this->lead ); ?>
+<h2>Extra Fields</h2>
+<table>
+	<?php $fields = $this->get_extra_fields( $this->options->fields ); ?>
+	<?php foreach ( $fields as $key => $value ): ?>
+		<tr>
+			<th scope="row"><?= $key; ?></th>
+			<td><pre><?= $value; ?></pre></td>
+		</tr>
+	<?php endforeach; ?>
+</table>
+
+<h2>Global Fields</h2>
+<table>
+	<?php $fields = $this->get_global_fields( $this->options->global_fields ); ?>
+	<?php foreach ( $fields as $key => $value ): ?>
+		<tr>
+			<th scope="row"><?= $key; ?></th>
+			<td><pre><?= $value; ?></pre></td>
+		</tr>
+	<?php endforeach; ?>
+</table>
+
+<h2>Lead Data</h2>
+<table>
+	<?php $lead = $this->lead; ?>
+	<?php foreach ( $lead as $key => $value ): ?>
+		<tr>
+			<th scope="row"><?= $key; ?></th>
+			<td><pre><?= $value; ?></pre></td>
+		</tr>
+	<?php endforeach; ?>
+</table>
