@@ -57,7 +57,7 @@ class Lead extends Options {
 				$this->lead = $this->construct_lead( $this->fields, $_POST );
 
 				// Debug?
-				// $this->debug();
+				if ( $this->options['debug'] === 'Enabled' ) $this->debug();
 
 				// Is there a lead?
 				if ( count( $this->lead ) !== 0 ) {

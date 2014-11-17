@@ -22,6 +22,7 @@ class Options {
 			'client_secret' => '',
 			'munchkin_id'   => '',
 			'status'        => 'Disabled',
+			'debug'         => 'Disabled',
 		);
 		return $this->deobfuscate( get_option( 'rj_ml_options', $this->obfuscate( $default ) ) );
 	}
@@ -38,6 +39,7 @@ class Options {
 			'client_secret' => $options['client_secret'],
 			'munchkin_id'   => $options['munchkin_id'],
 			'status'        => $options['status'],
+			'debug'         => $options['debug'],
 		) ) );
 	}
 
