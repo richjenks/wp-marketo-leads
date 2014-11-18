@@ -51,16 +51,13 @@ class Options {
 
 		);
 
-		// Get current options or default
-		$options = json_decode( get_option( 'rj_ml_options', new \stdClass ) );
-
-		// Convert options from object to array
-		$options = json_decode( json_encode( $options ), true );
+		// Get current options as array
+		$options = json_decode( get_option( 'rj_ml_options', new \stdClass ), true );
 
 		// Merge options & defaults
 		$options = array_replace_recursive( $defaults, $options );
 
-		// Return constructed options as an object
+		// Return full options as an object
 		return json_decode( json_encode( $options ) );
 
 	}
