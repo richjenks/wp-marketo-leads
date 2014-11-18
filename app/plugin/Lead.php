@@ -227,6 +227,9 @@ class Lead extends Options {
 			case 'ip_address':
 				return $_SERVER['REMOTE_ADDR'];
 
+			case 'date_time':
+				return date('c');
+
 		}
 	}
 

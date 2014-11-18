@@ -40,6 +40,10 @@ class Options {
 					'status'        => 'Disabled',
 					'marketo_field' => '',
 				),
+				'date_time' => array(
+					'status'        => 'Disabled',
+					'marketo_field' => '',
+				),
 			),
 
 			// Global fields

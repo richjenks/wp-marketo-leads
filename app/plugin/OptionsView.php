@@ -109,6 +109,25 @@
 				</td>
 			</tr>
 
+			<?php // Date & Time ?>
+			<tr>
+				<th scope="row">
+					<label for="fields[date_time][status]">Date & Time</label>
+				</th>
+				<td>
+					<select name="fields[date_time][status]" id="fields[date_time][status]">
+						<option <?php if ( $this->options->fields->date_time->status === 'Disabled' ) echo 'selected'; ?>>Disabled</option>
+						<option <?php if ( $this->options->fields->date_time->status === 'Enabled' ) echo 'selected'; ?>>Enabled</option>
+					</select>
+				</td>
+				<th>
+					<label for="fields[date_time][marketo_field]">Marketo Field</label>:
+				</th>
+				<td>
+					<input type="text" class="regular-text" name="fields[date_time][marketo_field]" placeholder="Marketo Field" value="<?=$this->options->fields->date_time->marketo_field;?>">
+				</td>
+			</tr>
+
 			<?php // IP Address ?>
 			<tr>
 				<th scope="row">
