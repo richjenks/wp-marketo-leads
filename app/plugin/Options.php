@@ -19,7 +19,7 @@ class Options {
 	protected function get_options() {
 
 		// Default options
-		$default = array(
+		$defaults = array(
 
 			// Marketo API
 			'client_id'     => '',
@@ -36,6 +36,10 @@ class Options {
 					'status'        => 'Disabled',
 					'marketo_field' => '',
 				),
+				'ip_address' => array(
+					'status'        => 'Disabled',
+					'marketo_field' => '',
+				),
 			),
 
 			// Global fields
@@ -44,10 +48,16 @@ class Options {
 		);
 
 		// Get current options or default
-		$options = json_decode( get_option( 'rj_ml_options', json_encode( $default ) ) );
+		$options = json_decode( get_option( 'rj_ml_options', new \stdClass ) );
 
-		// Return object of merged properties (in case options were added)
-		return (object) array_merge( $default, (array) $options );
+		// Convert options from object to array
+		$options = json_decode( json_encode( $options ), true );
+
+		// Merge options & defaults
+		$options = array_replace_recursive( $defaults, $options );
+
+		// Return constructed options as an object
+		return json_decode( json_encode( $options ) );
 
 	}
 

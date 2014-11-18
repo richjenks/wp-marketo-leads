@@ -109,6 +109,25 @@
 				</td>
 			</tr>
 
+			<?php // IP Address ?>
+			<tr>
+				<th scope="row">
+					<label for="fields[ip_address][status]">IP Address</label>
+				</th>
+				<td>
+					<select name="fields[ip_address][status]" id="fields[ip_address][status]">
+						<option <?php if ( $this->options->fields->ip_address->status === 'Disabled' ) echo 'selected'; ?>>Disabled</option>
+						<option <?php if ( $this->options->fields->ip_address->status === 'Enabled' ) echo 'selected'; ?>>Enabled</option>
+					</select>
+				</td>
+				<th>
+					<label for="fields[ip_address][marketo_field]">Marketo Field</label>:
+				</th>
+				<td>
+					<input type="text" class="regular-text" name="fields[ip_address][marketo_field]" placeholder="Marketo Field" value="<?=$this->options->fields->ip_address->marketo_field;?>">
+				</td>
+			</tr>
+
 		</table>
 
 		<?php // Global Fields ?>

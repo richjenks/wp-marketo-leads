@@ -219,9 +219,14 @@ class Lead extends Options {
 
 	private function get_extra_field_value( $field ) {
 		switch ( $field ) {
+
 			case 'current_url':
-				$protocol  = @( $_SERVER["HTTPS"] != 'on' ) ? 'http://' : 'https://';
-				return $protocol . $_SERVER["SERVER_NAME"] . $_SERVER["REQUEST_URI"];
+				$protocol  = @( $_SERVER['HTTPS'] != 'on' ) ? 'http://' : 'https://';
+				return $protocol . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
+
+			case 'ip_address':
+				return $_SERVER['REMOTE_ADDR'];
+
 		}
 	}
 
