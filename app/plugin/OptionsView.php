@@ -92,57 +92,36 @@
 
 			<?php // Current URL ?>
 			<tr>
-				<th scope="row">
-					<label for="fields[current_url][status]">Current URL</label>
-				</th>
+				<th><label for="fields[current_url][status]">Current URL</label></th>
 				<td>
 					<select name="fields[current_url][status]" id="fields[current_url][status]">
 						<option <?php if ( $this->options->fields->current_url->status === 'Disabled' ) echo 'selected'; ?>>Disabled</option>
 						<option <?php if ( $this->options->fields->current_url->status === 'Enabled' ) echo 'selected'; ?>>Enabled</option>
 					</select>
-				</td>
-				<th>
-					<label for="fields[current_url][marketo_field]">Marketo Field</label>:
-				</th>
-				<td>
 					<input type="text" class="regular-text" name="fields[current_url][marketo_field]" placeholder="Marketo Field" value="<?=$this->options->fields->current_url->marketo_field;?>">
 				</td>
 			</tr>
 
 			<?php // Date & Time ?>
 			<tr>
-				<th scope="row">
-					<label for="fields[date_time][status]">Date & Time</label>
-				</th>
+				<th><label for="fields[date_time][status]">Date &amp; Time</label></th>
 				<td>
 					<select name="fields[date_time][status]" id="fields[date_time][status]">
 						<option <?php if ( $this->options->fields->date_time->status === 'Disabled' ) echo 'selected'; ?>>Disabled</option>
 						<option <?php if ( $this->options->fields->date_time->status === 'Enabled' ) echo 'selected'; ?>>Enabled</option>
 					</select>
-				</td>
-				<th>
-					<label for="fields[date_time][marketo_field]">Marketo Field</label>:
-				</th>
-				<td>
 					<input type="text" class="regular-text" name="fields[date_time][marketo_field]" placeholder="Marketo Field" value="<?=$this->options->fields->date_time->marketo_field;?>">
 				</td>
 			</tr>
 
 			<?php // IP Address ?>
 			<tr>
-				<th scope="row">
-					<label for="fields[ip_address][status]">IP Address</label>
-				</th>
+				<th><label for="fields[ip_address][status]">IP Address</label></th>
 				<td>
 					<select name="fields[ip_address][status]" id="fields[ip_address][status]">
 						<option <?php if ( $this->options->fields->ip_address->status === 'Disabled' ) echo 'selected'; ?>>Disabled</option>
 						<option <?php if ( $this->options->fields->ip_address->status === 'Enabled' ) echo 'selected'; ?>>Enabled</option>
 					</select>
-				</td>
-				<th>
-					<label for="fields[ip_address][marketo_field]">Marketo Field</label>:
-				</th>
-				<td>
 					<input type="text" class="regular-text" name="fields[ip_address][marketo_field]" placeholder="Marketo Field" value="<?=$this->options->fields->ip_address->marketo_field;?>">
 				</td>
 			</tr>
