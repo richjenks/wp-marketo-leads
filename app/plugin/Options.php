@@ -52,7 +52,7 @@ class Options {
 		);
 
 		// Get current options as array
-		$options = json_decode( get_option( 'rj_ml_options', new \stdClass ), true );
+		$options = json_decode( get_option( 'rj_ml_options', '[]' ), true );
 
 		// Merge options & defaults
 		$options = array_replace_recursive( $defaults, $options );
