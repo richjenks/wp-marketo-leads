@@ -13,7 +13,7 @@ class Options {
 	/**
 	 * get_options
 	 *
-	 * @return array Options array
+	 * @return object Plugin options
 	 */
 
 	protected function get_options() {
