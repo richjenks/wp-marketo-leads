@@ -127,6 +127,10 @@ class Lead extends Options {
 
 	private function construct_lead( $fields, $posted ) {
 
+		/**
+		 * @todo Flatten array here to accommodate for multidimentional field names
+		 */
+
 		// Array to return
 		$lead = array();
 
@@ -268,6 +272,50 @@ class Lead extends Options {
 		}
 
 		return $global_fields;
+
+	}
+
+	/**
+	 * flatten_array
+	 *
+	 * Generates a flat array from a multidimentional array by concatenating keys
+	 *
+	 * @see http://stackoverflow.com/a/9546215/1562799
+	 *
+	 * @param array $multi Multidimentional array
+	 * @return array Flat array
+	 */
+
+	private function flatten_array( $multi, $prefix = '' ) {
+
+		$flat = array();
+
+		// Flatten array by recursively running this function
+		foreach ( $multi as $key => $value ) {
+
+			// TEST
+			$suffix = '';
+
+			if ( is_array( $value ) ) {
+
+				// $suffix = ( substr( $prefix, -1 ) === ']' ) ? '][' : '[';
+
+				// If array, call this function to flatten it
+				$flat = $flat + $this->flatten_array( $value, $prefix . $key . $suffix );
+
+			} else {
+
+				// If prefix exists, it was originally an array item, so close it
+				$suffix = ( $prefix !== '' ) ? ']' : '';
+
+				// Not array, so just set it as is
+				$flat[ $prefix . $key . $suffix ] = $value;
+
+			}
+
+		}
+
+		return $flat;
 
 	}
 
