@@ -30,22 +30,6 @@ class Options {
 			'status' => 'Disabled',
 			'debug'  => 'Disabled',
 
-			// Extra Fields
-			'fields' => array(
-				'current_url' => array(
-					'status'        => 'Disabled',
-					'marketo_field' => '',
-				),
-				'ip_address' => array(
-					'status'        => 'Disabled',
-					'marketo_field' => '',
-				),
-				'date_time' => array(
-					'status'        => 'Disabled',
-					'marketo_field' => '',
-				),
-			),
-
 			// Global fields
 			'global_fields' => '',
 
