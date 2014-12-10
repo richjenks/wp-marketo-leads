@@ -185,56 +185,11 @@ class Lead extends Options {
 
 		}
 
-		// Add extra fields to lead — submitted values take priority!
-		$lead = array_merge( $this->get_extra_fields( $this->options->fields ), $lead );
-
 		// Add global fields to lead — submitted values take priority!
 		$lead = array_merge( $this->get_global_fields( $this->options->global_fields ), $lead );
 
 		return $lead;
 
-	}
-
-	/**
-	 * get_extra_fields
-	 *
-	 * Constructs array of extra fields to be added to lead data
-	 *
-	 * @param array $fields Extra fields configured in Options
-	 * @return array Array of extra fields, key being Marketo field
-	 */
-
-	private function get_extra_fields( $fields ) {
-		$extra_fields = array();
-		foreach ( $fields as $field => $field_options )
-			if ( $field_options->status === 'Enabled' )
-				$extra_fields[ $field_options->marketo_field ] = $this->get_extra_field_value( $field );
-		return $extra_fields;
-	}
-
-	/**
-	 * get_extra_field_value
-	 *
-	 * Determines the value of extra fields which all have bespoke purpose
-	 *
-	 * @param string $field Name of extra field
-	 * @return string Value of custom field for this submission
-	 */
-
-	private function get_extra_field_value( $field ) {
-		switch ( $field ) {
-
-			case 'current_url':
-				$protocol  = @( $_SERVER['HTTPS'] != 'on' ) ? 'http://' : 'https://';
-				return $protocol . $_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-
-			case 'ip_address':
-				return $_SERVER['REMOTE_ADDR'];
-
-			case 'date_time':
-				return date('c');
-
-		}
 	}
 
 	/**
