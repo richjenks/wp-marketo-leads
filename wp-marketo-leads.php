@@ -11,9 +11,3 @@
  */
 
 require 'app/start.php';
-
-if ( !is_admin() && $GLOBALS['pagenow'] !== 'wp-login.php' && $GLOBALS['pagenow'] !== 'wp-register.php' ) {
-	echo 'Front';
-} else {
-	echo 'Back';
-}
