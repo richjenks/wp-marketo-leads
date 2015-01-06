@@ -78,7 +78,7 @@
 						<option <?php if ( $this->options->debug === 'Disabled' ) echo 'selected'; ?>>Disabled</option>
 						<option <?php if ( $this->options->debug === 'Enabled' ) echo 'selected'; ?>>Enabled</option>
 					</select>
-					<p class="description">When enabled, shows debug information rather than sending data to Marketo.<br>Plugin Status must be Enabled for Debug Mode to work.</p>
+					<p class="description">Whether debug information should be displayed, e.g. to find field <code>name</code>s.</p>
 				</td>
 			</tr>
 
