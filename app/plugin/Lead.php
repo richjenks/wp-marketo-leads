@@ -36,7 +36,12 @@ class Lead extends Options {
 
 	public function __construct() {
 
-		if ( !empty( $_POST ) && !is_admin() ) {
+		if (
+			!empty( $_POST )
+			&& !is_admin()
+			&& $GLOBALS['pagenow'] !== 'wp-login.php'
+			&& $GLOBALS['pagenow'] !== 'wp-register.php'
+		) {
 
 			// Get API options
 			$this->options = $this->get_options();
