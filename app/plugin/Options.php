@@ -29,6 +29,7 @@ class Options {
 			// Plugin Options
 			'status' => 'Disabled',
 			'debug'  => 'Disabled',
+			'lookup' => 'None',
 
 			// Global fields
 			'global_fields' => '',

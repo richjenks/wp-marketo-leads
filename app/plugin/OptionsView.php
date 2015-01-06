@@ -82,6 +82,22 @@
 				</td>
 			</tr>
 
+			<?php // Lookup Field ?>
+			<tr>
+				<th scope="row">
+					<label for="lookup">Lookup Field</label>
+				</th>
+				<td>
+					<select name="lookup" id="lookup">
+						<option>None</option>
+						<?php foreach ( $this->data['fields'] as $field ): ?>
+							<option <?php if ( $this->options->lookup === $field ) echo 'selected'; ?>><?= $field; ?></option>
+						<?php endforeach; ?>
+					</select>
+					<p class="description">Field used to find existing leads&thinsp;&mdash;&thinsp;"None" will always create a new lead.</p>
+				</td>
+			</tr>
+
 		</table>
 
 		<?php // Global Fields ?>

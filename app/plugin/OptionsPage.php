@@ -23,6 +23,12 @@ class OptionsPage extends Options {
 	private $options;
 
 	/**
+	 * @var array Data for options that aren't current
+	 */
+
+	private $data;
+
+	/**
 	 * __construct
 	 *
 	 * Start the magic...
@@ -48,6 +54,15 @@ class OptionsPage extends Options {
 
 		// Get current values
 		$this->options = $this->get_options();
+
+		// Construct other data
+		$fields = get_posts( array(
+			'posts_per_page' => -1,
+			'post_type' => 'rj_ml_cpt_fields',
+		) );
+		foreach ( $fields as $field ) {
+			$this->data['fields'][] = $field->post_title;
+		}
 
 	}
 
