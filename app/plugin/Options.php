@@ -57,4 +57,19 @@ class Options {
 		update_option( 'rj_ml_options', json_encode( $options ) );
 	}
 
+	/**
+	 * add_notice
+	 *
+	 * Adds a simple notice to the admin area
+	 *
+	 * @param string $type Notice type, e.g. `updated`, `error`, or `update-nag`
+	 * @param string $text Text to be shown in the notice
+	 */
+
+	protected function add_notice( $type, $text ) {
+		add_action( 'admin_notices', function () use ( $type, $text ) {
+			echo '<div class="' . $type . '"><p>' . $text . '</p></div>';
+		} );
+	}
+
 }
