@@ -83,8 +83,26 @@ class Lead extends Options {
 					// Construct leads array (must be array of lead arrays for API)
 					$this->lead = array( $this->lead );
 
-					// Create the lead!
-					$client->createOrUpdateLeads( $this->lead, 'email' );
+					// How to handle lead?
+					switch ( $this->options->action ) {
+
+						case 'Create only':
+							$client->createLeads( $this->lead );
+							break;
+
+						case 'Update only':
+							$client->updateLeads( $this->lead );
+							break;
+
+						case 'Always Create':
+							$client->createDuplicateLeads( $this->lead );
+							break;
+
+						default:
+							$client->createOrUpdateLeads( $this->lead );
+							break;
+
+					}
 
 				}
 

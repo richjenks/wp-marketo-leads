@@ -29,7 +29,7 @@ class Options {
 			// Plugin Options
 			'status' => 'Disabled',
 			'debug'  => 'Disabled',
-			'lookup' => 'None',
+			'action' => 'Create/Update',
 
 			// Global fields
 			'global_fields' => '',

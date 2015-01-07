@@ -54,17 +54,6 @@ tr:nth-child(odd) { background: #d6eef6; }
 	<?php endforeach; ?>
 </table>
 
-<h2>Extra Fields</h2>
-<table>
-	<?php $fields = $this->get_extra_fields( $this->options->fields ); ?>
-	<?php foreach ( $fields as $key => $value ): ?>
-		<tr>
-			<th scope="row"><?= $key; ?></th>
-			<td><pre><?= $value; ?></pre></td>
-		</tr>
-	<?php endforeach; ?>
-</table>
-
 <h2>Global Fields</h2>
 <table>
 	<?php $fields = $this->get_global_fields( $this->options->global_fields ); ?>

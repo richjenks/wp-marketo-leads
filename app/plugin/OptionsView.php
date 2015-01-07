@@ -82,19 +82,19 @@
 				</td>
 			</tr>
 
-			<?php // Lookup Field ?>
+			<?php // Action ?>
+			<?php $options = array( 'Create/Update', 'Create only', 'Update only', 'Always Create' ); ?>
 			<tr>
 				<th scope="row">
-					<label for="lookup">Lookup Field</label>
+					<label for="action">Action</label>
 				</th>
 				<td>
-					<select name="lookup" id="lookup">
-						<option>None</option>
-						<?php foreach ( $this->data['fields'] as $field ): ?>
-							<option <?php if ( $this->options->lookup === $field ) echo 'selected'; ?>><?= $field; ?></option>
+					<select name="action" id="action">
+						<?php foreach ( $options as $option ): ?>
+							<option <?php if ( $this->options->action === $option ) echo 'selected'; ?>><?= $option; ?></option>
 						<?php endforeach; ?>
 					</select>
-					<p class="description">Field used to find existing leads&thinsp;&mdash;&thinsp;"None" will always create a new lead.</p>
+					<p class="description">How incoming leads should be treated. "Always Create" skips Marketo's duplication checks.</p>
 				</td>
 			</tr>
 
