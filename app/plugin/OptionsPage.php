@@ -42,7 +42,7 @@ class OptionsPage extends Options {
 			$this->set_options( $_POST );
 
 			// Show notice
-			add_action( 'admin_notices', function() { echo '<div id="message" class="updated"><p>Options updated!</p></div>'; } );
+			$this->add_notice( 'updated', 'Options updated!' );
 
 		}
 

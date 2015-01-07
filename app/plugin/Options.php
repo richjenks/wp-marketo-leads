@@ -72,4 +72,57 @@ class Options {
 		} );
 	}
 
+	/**
+	 * create_lead
+	 *
+	 * Sends the lead to the Marketo API
+	 */
+
+	protected function create_lead( $lead, $options ) {
+
+		// Is there a lead?
+		if ( count( $lead ) !== 0 ) {
+
+			// API Options
+			$api_options = array(
+				'client_id'     => $options->client_id,
+				'client_secret' => $options->client_secret,
+				'munchkin_id'   => $options->munchkin_id,
+			);
+
+			// Create API client using Options class
+			$client = \CSD\Marketo\Client::factory( $api_options );
+
+			// Construct leads array (must be array of lead arrays for API)
+			$lead = array( $lead );
+
+			// How to handle lead?
+			switch ( $options->action ) {
+
+				case 'Create only':
+					$response = $client->createLeads( $lead );
+					break;
+
+				case 'Update only':
+					$response = $client->updateLeads( $lead );
+					break;
+
+				case 'Always Create':
+					$response = $client->createDuplicateLeads( $lead );
+					break;
+
+				default:
+					$response = $client->createOrUpdateLeads( $lead );
+					break;
+
+			}
+
+			return $response;
+
+		}
+
+		return false;
+
+	}
+
 }
