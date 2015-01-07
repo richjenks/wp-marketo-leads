@@ -61,49 +61,15 @@ class Lead extends Options {
 				// Construct Lead data
 				$this->lead = $this->construct_lead( $this->fields, $_POST );
 
-				// Show debug info?
-				// if ( $this->options->debug === 'Enabled' ) {
-				// 	require 'DebugView.php';
-				// 	die;
-				// }
+				// If plugin enabled, create lead
+				if ( $this->options->status === 'Enabled' ) {
+					$this->create_lead( $this->lead, $this->options );
+				}
 
-				// Is there a lead?
-				if ( count( $this->lead ) !== 0 ) {
-
-					// API Options
-					$options = array(
-						'client_id'     => $this->options->client_id,
-						'client_secret' => $this->options->client_secret,
-						'munchkin_id'   => $this->options->munchkin_id,
-					);
-
-					// Create API client using Options class
-					$client = \CSD\Marketo\Client::factory( $options );
-
-					// Construct leads array (must be array of lead arrays for API)
-					$this->lead = array( $this->lead );
-
-					// How to handle lead?
-					switch ( $this->options->action ) {
-
-						case 'Create only':
-							$client->createLeads( $this->lead );
-							break;
-
-						case 'Update only':
-							$client->updateLeads( $this->lead );
-							break;
-
-						case 'Always Create':
-							$client->createDuplicateLeads( $this->lead );
-							break;
-
-						default:
-							$client->createOrUpdateLeads( $this->lead );
-							break;
-
-					}
-
+				// If debug enabled, show debug info
+				if ( $this->options->debug === 'Enabled' )  {
+					require 'DebugView.php';
+					die;
 				}
 
 			}
@@ -294,6 +260,55 @@ class Lead extends Options {
 		}
 
 		return $flat;
+
+	}
+
+	/**
+	 * create_lead
+	 *
+	 * Sends the lead to the Marketo API
+	 */
+
+	private function create_lead( $lead, $options ) {
+
+		// Is there a lead?
+		if ( count( $lead ) !== 0 ) {
+
+			// API Options
+			$api_options = array(
+				'client_id'     => $options->client_id,
+				'client_secret' => $options->client_secret,
+				'munchkin_id'   => $options->munchkin_id,
+			);
+
+			// Create API client using Options class
+			$client = \CSD\Marketo\Client::factory( $api_options );
+
+			// Construct leads array (must be array of lead arrays for API)
+			$lead = array( $lead );
+
+			// How to handle lead?
+			switch ( $options->action ) {
+
+				case 'Create only':
+					$client->createLeads( $lead );
+					break;
+
+				case 'Update only':
+					$client->updateLeads( $lead );
+					break;
+
+				case 'Always Create':
+					$client->createDuplicateLeads( $lead );
+					break;
+
+				default:
+					$client->createOrUpdateLeads( $lead );
+					break;
+
+			}
+
+		}
 
 	}
 
