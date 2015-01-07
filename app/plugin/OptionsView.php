@@ -78,7 +78,7 @@
 						<option <?php if ( $this->options->debug === 'Disabled' ) echo 'selected'; ?>>Disabled</option>
 						<option <?php if ( $this->options->debug === 'Enabled' ) echo 'selected'; ?>>Enabled</option>
 					</select>
-					<p class="description">Whether debug information should be displayed, e.g. to find field <code>name</code>s.</p>
+					<p class="description">Whether debug information should be displayed for logged in users, e.g. to find field <code>name</code>s.</p>
 				</td>
 			</tr>
 

@@ -31,50 +31,57 @@ class Lead extends Options {
 	/**
 	 * __construct
 	 *
-	 * Start the magic...
+	 * Don't do anything until `wp_loaded`!
+	 *
+	 * Late enough for everything to be available
+	 * but early enough to send headers if needed
 	 */
 
 	public function __construct() {
 
-		if (
-			!empty( $_POST )
-			&& !is_admin()
-			&& $GLOBALS['pagenow'] !== 'wp-login.php'
-			&& $GLOBALS['pagenow'] !== 'wp-register.php'
-		) {
+		add_action( 'wp_loaded', function () {
 
-			// Get API options
-			$this->options = $this->get_options();
+			if (
+				!empty( $_POST )
+				&& !is_admin()
+				&& $GLOBALS['pagenow'] !== 'wp-login.php'
+				&& $GLOBALS['pagenow'] !== 'wp-register.php'
+			) {
 
-			// Check if plugin or debug mode is enabled
-			if ( $this->options->status === 'Enabled' || $this->options->debug === 'Enabled' ) {
+				// Get API options
+				$this->options = $this->get_options();
 
-				// Get field posts
-				$posts = get_posts( array(
-					'posts_per_page' => PHP_INT_MAX,
-					'post_type'      => 'rj_ml_cpt_fields',
-				) );
+				// Check if plugin or debug mode is enabled
+				if ( $this->options->status === 'Enabled' || $this->options->debug === 'Enabled' ) {
 
-				// Sanitize field data so it's usable
-				$this->fields = $this->sanitize_posts( $posts );
+					// Get field posts
+					$posts = get_posts( array(
+						'posts_per_page' => PHP_INT_MAX,
+						'post_type'      => 'rj_ml_cpt_fields',
+					) );
 
-				// Construct Lead data
-				$this->lead = $this->construct_lead( $this->fields, $_POST );
+					// Sanitize field data so it's usable
+					$this->fields = $this->sanitize_posts( $posts );
 
-				// If plugin enabled, create lead
-				if ( $this->options->status === 'Enabled' ) {
-					$this->create_lead( $this->lead, $this->options );
-				}
+					// Construct Lead data
+					$this->lead = $this->construct_lead( $this->fields, $_POST );
 
-				// If debug enabled, show debug info
-				if ( $this->options->debug === 'Enabled' )  {
-					require 'DebugView.php';
-					die;
+					// If plugin enabled, create lead
+					if ( $this->options->status === 'Enabled' ) {
+						$this->create_lead( $this->lead, $this->options );
+					}
+
+					// If debug enabled, show debug info
+					if ( $this->options->debug === 'Enabled' && \is_user_logged_in() )  {
+						require 'DebugView.php';
+						die;
+					}
+
 				}
 
 			}
 
-		}
+		} );
 
 	}
 
