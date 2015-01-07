@@ -7,8 +7,8 @@
  */
 
 // Sanitize options for viewing
-$this->options->client_secret = '[REDACTED]';
 unset( $this->options->submit );
+unset( $this->options->client_secret );
 unset( $this->options->rj_ml_options_submitted );
 
 ?>
@@ -21,6 +21,9 @@ tr:nth-child(odd) { background: #d6eef6; }
 </style>
 
 <h1>Marketo Leads Debug Info</h1>
+
+<p><em>You are seeing this because you are logged in and Debug Mode is enabled.</em></p>
+<p><em>Don't worry, visitors who aren't logged in won't see this!</em></p>
 
 <h2>Plugin Options</h2>
 <table>
