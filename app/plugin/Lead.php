@@ -46,8 +46,8 @@ class Lead extends Options {
 			// Get API options
 			$this->options = $this->get_options();
 
-			// Check if plugin is enabled
-			if ( $this->options->status === 'Enabled' ) {
+			// Check if plugin or debug mode is enabled
+			if ( $this->options->status === 'Enabled' || $this->options->debug === 'Enabled' ) {
 
 				// Get field posts
 				$posts = get_posts( array(
@@ -62,10 +62,10 @@ class Lead extends Options {
 				$this->lead = $this->construct_lead( $this->fields, $_POST );
 
 				// Show debug info?
-				if ( $this->options->debug === 'Enabled' ) {
-					require 'DebugView.php';
-					die;
-				}
+				// if ( $this->options->debug === 'Enabled' ) {
+				// 	require 'DebugView.php';
+				// 	die;
+				// }
 
 				// Is there a lead?
 				if ( count( $this->lead ) !== 0 ) {
@@ -208,23 +208,23 @@ class Lead extends Options {
 
 		}
 
-		// Add global fields to lead — submitted values take priority!
-		$lead = array_merge( $this->get_global_fields( $this->options->global_fields ), $lead );
+		// Add default fields to lead — submitted values take priority!
+		$lead = array_merge( $this->get_default_fields( $this->options->default_fields ), $lead );
 
 		return $lead;
 
 	}
 
 	/**
-	 * get_global_fields
+	 * get_default_fields
 	 *
-	 * Constructs array of global fields to be added to lead data
+	 * Constructs array of default fields to be added to lead data
 	 *
-	 * @param string $fields Value of global fields textarea in options page
+	 * @param string $fields Value of default fields textarea in options page
 	 * @return array 'marketo_field' => 'field_value'
 	 */
 
-	private function get_global_fields( $fields ) {
+	private function get_default_fields( $fields ) {
 
 		$global_fields = array();
 

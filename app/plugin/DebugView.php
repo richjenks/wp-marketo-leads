@@ -54,9 +54,9 @@ tr:nth-child(odd) { background: #d6eef6; }
 	<?php endforeach; ?>
 </table>
 
-<h2>Global Fields</h2>
+<h2>Default Fields</h2>
 <table>
-	<?php $fields = $this->get_global_fields( $this->options->global_fields ); ?>
+	<?php $fields = $this->get_default_fields( $this->options->default_fields ); ?>
 	<?php foreach ( $fields as $key => $value ): ?>
 		<tr>
 			<th scope="row"><?= $key; ?></th>
