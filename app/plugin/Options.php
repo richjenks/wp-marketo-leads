@@ -31,8 +31,8 @@ class Options {
 			'debug'  => 'Disabled',
 			'action' => 'Create/Update',
 
-			// Global fields
-			'global_fields' => '',
+			// Default Fields
+			'default_fields' => '',
 
 		);
 

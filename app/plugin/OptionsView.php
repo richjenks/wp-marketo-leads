@@ -100,20 +100,14 @@
 
 		</table>
 
-		<?php // Global Fields ?>
+		<?php // Default Fields ?>
 		<hr>
-		<h3>Global Fields</h3>
-		<p class="description">Fields to be sent with every lead. One per line, whitespace is ignored.<br>Marketo field and value separate by a pipe "|" character, e.g. "leadSource | website".</p>
-		<table class="form-table">
-			<tr>
-				<th scope="row">
-					<label for="global_fields">Global Fields</label>
-				</th>
-				<td>
-					<textarea rows="5" cols="50" name="global_fields" id="global_fields"><?=$this->options->global_fields;?></textarea>
-				</td>
-			</tr>
-		</table>
+		<h3>Default Fields</h3>
+		<p class="description">Added to every lead but overwritten by user-provided data.</p>
+		<textarea rows="7" cols="70" name="default_fields" id="default_fields" placeholder="Default Fields"><?=$this->options->default_fields;?></textarea>
+		<p class="description">One per line. Separate Marketo field and value by a pipe "|" character, e.g. "leadSource | Website".</p>
+
+		<?php // Submit ?>
 		<input type="hidden" name="rj_ml_options_submitted">
 		<p class="submit"><input type="submit" name="submit" id="submit" class="button button-primary" value="Save Changes"></p>
 
