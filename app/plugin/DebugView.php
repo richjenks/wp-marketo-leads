@@ -29,7 +29,25 @@ tr:nth-child(odd) { background: #d6eef6; }
 	<?php foreach ( $this->options as $option => $value ): ?>
 		<tr>
 			<th scope="row"><?= $option; ?></th>
-			<td><pre><?= ( is_string( $value ) ) ? $value : json_encode( (array) $value, JSON_PRETTY_PRINT ); ?></pre></td>
+			<td><pre><?php
+				if ( !is_string( $value ) ) {
+					echo json_encode( (array) $value, JSON_PRETTY_PRINT );
+				} elseif ( strpos( $value , '|' ) !== false ) {
+					echo '<table>';
+					$rows = explode( "\n", $value );
+					foreach ( $rows as $row ) {
+						echo '<tr>';
+						$cells = explode( '|', $row );
+						foreach ( $cells as $cell ) {
+							echo '<td>' . trim( $cell ) . '</td>';
+						}
+						echo '</tr>';
+					}
+					echo '</table>';
+				} else {
+					echo $value;
+				}
+			?></pre></td>
 		</tr>
 	<?php endforeach; ?>
 </table>
