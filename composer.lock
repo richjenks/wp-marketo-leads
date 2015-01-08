@@ -50,12 +50,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dchesterton/marketo-rest-api.git",
-                "reference": "3504956ac7a741aadabcbbaef43741e2fbafe56d"
+                "reference": "f3b5b10a11bc1a324c33b03eacdcc9b4ffc47d67"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dchesterton/marketo-rest-api/zipball/3504956ac7a741aadabcbbaef43741e2fbafe56d",
-                "reference": "3504956ac7a741aadabcbbaef43741e2fbafe56d",
+                "url": "https://api.github.com/repos/dchesterton/marketo-rest-api/zipball/f3b5b10a11bc1a324c33b03eacdcc9b4ffc47d67",
+                "reference": "f3b5b10a11bc1a324c33b03eacdcc9b4ffc47d67",
                 "shasum": ""
             },
             "require": {
@@ -79,7 +79,7 @@
                 }
             ],
             "description": "A PHP client for the Marketo.com REST API",
-            "time": "2014-12-23 00:48:19"
+            "time": "2014-10-31 10:48:49"
         },
         {
             "name": "guzzle/guzzle",
@@ -175,17 +175,17 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.6.3",
+            "version": "v2.5.6",
             "target-dir": "Symfony/Component/EventDispatcher",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "40ff70cadea3785d83cac1c8309514b36113064e"
+                "reference": "804eb28dbbfba9ffdab21fe2066744906cea2212"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/40ff70cadea3785d83cac1c8309514b36113064e",
-                "reference": "40ff70cadea3785d83cac1c8309514b36113064e",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/804eb28dbbfba9ffdab21fe2066744906cea2212",
+                "reference": "804eb28dbbfba9ffdab21fe2066744906cea2212",
                 "shasum": ""
             },
             "require": {
@@ -193,10 +193,9 @@
             },
             "require-dev": {
                 "psr/log": "~1.0",
-                "symfony/config": "~2.0,>=2.0.5",
-                "symfony/dependency-injection": "~2.6",
-                "symfony/expression-language": "~2.6",
-                "symfony/stopwatch": "~2.3"
+                "symfony/config": "~2.0",
+                "symfony/dependency-injection": "~2.0,<2.6.0",
+                "symfony/stopwatch": "~2.2"
             },
             "suggest": {
                 "symfony/dependency-injection": "",
@@ -205,7 +204,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.6-dev"
+                    "dev-master": "2.5-dev"
                 }
             },
             "autoload": {
@@ -229,7 +228,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "http://symfony.com",
-            "time": "2015-01-05 14:28:40"
+            "time": "2014-10-01 15:43:05"
         }
     ],
     "packages-dev": [],
@@ -239,7 +238,6 @@
         "dchesterton/marketo-rest-api": 20
     },
     "prefer-stable": false,
-    "prefer-lowest": false,
     "platform": [],
     "platform-dev": []
 }
