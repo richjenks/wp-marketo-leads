@@ -65,7 +65,7 @@ class Lead extends Options {
 
 					// Get field posts
 					$posts = get_posts( array(
-						'posts_per_page' => PHP_INT_MAX,
+						'posts_per_page' => -1,
 						'post_type'      => 'rj_ml_cpt_fields',
 					) );
 
