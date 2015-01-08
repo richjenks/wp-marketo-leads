@@ -7,10 +7,9 @@
  */
 
 // Sanitize options for viewing
-unset( $this->options->submit );
-unset( $this->options->client_secret );
-unset( $this->options->rj_ml_options_submitted );
-
+unset( $this->options['submit'] );
+unset( $this->options['client_secret'] );
+unset( $this->options['rj_ml_options_submitted'] );
 ?>
 
 <style>
@@ -59,7 +58,7 @@ tr:nth-child(odd) { background: #d6eef6; }
 
 <h2>Default Fields</h2>
 <table>
-	<?php $fields = $this->get_default_fields( $this->options->default_fields ); ?>
+	<?php $fields = $this->get_default_fields( $this->options['default_fields'] ); ?>
 	<?php foreach ( $fields as $key => $value ): ?>
 		<tr>
 			<th scope="row"><?= $key; ?></th>

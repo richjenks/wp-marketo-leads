@@ -11,39 +11,48 @@ namespace RichJenks\MarketoLeads;
 class Options {
 
 	/**
+	 * @var array Default options
+	 */
+
+	private $defaults = array(
+
+		// Marketo API
+		'client_id'     => '',
+		'client_secret' => '',
+		'munchkin_id'   => '',
+
+		// Plugin Options
+		'status' => 'Disabled',
+		'debug'  => 'Disabled',
+		'action' => 'Create/Update',
+
+		// Default Fields
+		'default_fields' => '',
+
+	);
+
+	/**
 	 * get_options
 	 *
-	 * @return object Plugin options
+	 * @return array Plugin options
 	 */
 
 	protected function get_options() {
 
-		// Default options
-		$defaults = array(
+		// Get encrypted options
+		$options = get_option( 'rj_ml_options', '[]' );
 
-			// Marketo API
-			'client_id'     => '',
-			'client_secret' => '',
-			'munchkin_id'   => '',
+		// If stored options are returned, decrypt them
+		if ( $options !== '[]' ) $options = $this->decrypt( $options, AUTH_KEY );
 
-			// Plugin Options
-			'status' => 'Disabled',
-			'debug'  => 'Disabled',
-			'action' => 'Create/Update',
+		// If first character not `{`, decryption failed and should revert to defaults
+		if ( substr( $options, 0, 1 ) !== '{' ) $options = '[]';
 
-			// Default Fields
-			'default_fields' => '',
+		// Convert to array
+		$options = json_decode( $options, true );
 
-		);
-
-		// Get current options as array
-		$options = json_decode( get_option( 'rj_ml_options', '[]' ), true );
-
-		// Merge options & defaults
-		$options = array_replace_recursive( $defaults, $options );
-
-		// Return full options as an object
-		return json_decode( json_encode( $options ) );
+		// Return merged options
+		return array_replace_recursive( $this->defaults, $options );
 
 	}
 
@@ -54,7 +63,19 @@ class Options {
 	 */
 
 	protected function set_options( $options ) {
-		update_option( 'rj_ml_options', json_encode( $options ) );
+
+		// Remove invalid options
+		foreach ( $options as $option => $value ) {
+			if ( !isset( $this->defaults[ $option ] ) ) {
+				unset( $options[ $option ] );
+			}
+		}
+
+		// Serialize & encrypt data
+		$options = $this->encrypt( json_encode( $options ), AUTH_KEY );
+
+		update_option( 'rj_ml_options', $options );
+
 	}
 
 	/**
@@ -123,6 +144,42 @@ class Options {
 
 		return false;
 
+	}
+
+	/**
+	 * encrypt
+	 *
+	 * @see http://wordpress.stackexchange.com/questions/25062/how-to-store-username-and-password-to-api-in-wordpress-option-db
+	 *
+	 * @param string $input_string Text to be encrypted
+	 * @param string $key Encryption key (use `AUTH_KEY`)
+	 *
+	 * @return string Encrypted data
+	 */
+
+	private function encrypt( $input_string, $key ) {
+		$iv_size = mcrypt_get_iv_size( MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB );
+		$iv = mcrypt_create_iv( $iv_size, MCRYPT_RAND );
+		$h_key = hash( 'sha256', $key, TRUE );
+		return base64_encode( mcrypt_encrypt( MCRYPT_RIJNDAEL_256, $h_key, $input_string, MCRYPT_MODE_ECB, $iv ) );
+	}
+
+	/**
+	 * decrypt
+	 *
+	 * @see http://wordpress.stackexchange.com/questions/25062/how-to-store-username-and-password-to-api-in-wordpress-option-db
+	 *
+	 * @param string $encrypted_input_string Encrypted data
+	 * @param string $key Encryption key (use `AUTH_KEY`)
+	 *
+	 * @return string Plaintext data
+	 */
+
+	private function decrypt( $encrypted_input_string, $key ) {
+		$iv_size = mcrypt_get_iv_size( MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB );
+		$iv = mcrypt_create_iv( $iv_size, MCRYPT_RAND );
+		$h_key = hash( 'sha256', $key, TRUE );
+		return trim( mcrypt_decrypt( MCRYPT_RIJNDAEL_256, $h_key, base64_decode( $encrypted_input_string ), MCRYPT_MODE_ECB, $iv ) );
 	}
 
 }

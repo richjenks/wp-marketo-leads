@@ -23,7 +23,7 @@
 					<label for="client_id">Client ID</label>
 				</th>
 				<td>
-					<input type="text" class="regular-text" name="client_id" placeholder="Client ID" value="<?=$this->options->client_id;?>" required>
+					<input type="text" class="regular-text" name="client_id" placeholder="Client ID" value="<?=$this->options['client_id'];?>" required>
 				</td>
 			</tr>
 
@@ -33,7 +33,7 @@
 					<label for="client_secret">Client Secret</label>
 				</th>
 				<td>
-					<input type="text" class="regular-text" name="client_secret" placeholder="Client Secret" value="<?=$this->options->client_secret;?>" required>
+					<input type="password" class="regular-text" name="client_secret" placeholder="Client Secret" value="<?=$this->options['client_secret'];?>" required>
 				</td>
 			</tr>
 
@@ -43,7 +43,7 @@
 					<label for="munchkin_id">Munchkin ID</label>
 				</th>
 				<td>
-					<input type="text" class="regular-text" name="munchkin_id" placeholder="Munchkin ID" value="<?=$this->options->munchkin_id;?>" required>
+					<input type="text" class="regular-text" name="munchkin_id" placeholder="Munchkin ID" value="<?=$this->options['munchkin_id'];?>" required>
 				</td>
 			</tr>
 
@@ -61,8 +61,8 @@
 				</th>
 				<td>
 					<select name="status" id="status">
-						<option <?php if ( $this->options->status === 'Disabled' ) echo 'selected'; ?>>Disabled</option>
-						<option <?php if ( $this->options->status === 'Enabled' ) echo 'selected'; ?>>Enabled</option>
+						<option <?php if ( $this->options['status'] === 'Disabled' ) echo 'selected'; ?>>Disabled</option>
+						<option <?php if ( $this->options['status'] === 'Enabled' ) echo 'selected'; ?>>Enabled</option>
 					</select>
 					<p class="description">Whether the plugin sends leads to Marketo.</p>
 				</td>
@@ -75,8 +75,8 @@
 				</th>
 				<td>
 					<select name="debug" id="debug">
-						<option <?php if ( $this->options->debug === 'Disabled' ) echo 'selected'; ?>>Disabled</option>
-						<option <?php if ( $this->options->debug === 'Enabled' ) echo 'selected'; ?>>Enabled</option>
+						<option <?php if ( $this->options['debug'] === 'Disabled' ) echo 'selected'; ?>>Disabled</option>
+						<option <?php if ( $this->options['debug'] === 'Enabled' ) echo 'selected'; ?>>Enabled</option>
 					</select>
 					<p class="description">Whether debug information should be displayed for logged in users, e.g. to find field <code>name</code>s.</p>
 				</td>
@@ -91,7 +91,7 @@
 				<td>
 					<select name="action" id="action">
 						<?php foreach ( $options as $option ): ?>
-							<option <?php if ( $this->options->action === $option ) echo 'selected'; ?>><?= $option; ?></option>
+							<option <?php if ( $this->options['action'] === $option ) echo 'selected'; ?>><?= $option; ?></option>
 						<?php endforeach; ?>
 					</select>
 					<p class="description">How incoming leads should be treated. "Always Create" skips Marketo's duplication checks.</p>
@@ -104,7 +104,7 @@
 		<hr>
 		<h3>Default Fields</h3>
 		<p class="description">Added to every lead but overwritten by user-provided data.</p>
-		<textarea rows="7" cols="70" name="default_fields" id="default_fields" placeholder="Default Fields"><?=$this->options->default_fields;?></textarea>
+		<textarea rows="7" cols="70" name="default_fields" id="default_fields" placeholder="Default Fields"><?=$this->options['default_fields'];?></textarea>
 		<p class="description">One per line. Separate Marketo field and value by a pipe "|" character, e.g. "leadSource | Website".</p>
 
 		<?php // Submit ?>

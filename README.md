@@ -29,3 +29,14 @@ Link a Marketo field with any number of form fields so that when that field is s
 
 - Fields starting with `_wp` will be ignored
 - In the form fields box, you can add a comment after a slash to remind you where the field came from, e.g. `field_name / Contact form`.
+
+## Hooks
+
+### Actions
+
+- `rj_ml_lead_created`: Immediately after creating a lead, receives lead data and options arrays
+
+### Filters
+
+- `rj_ml_lead`: Constructed lead data
+- `rj_ml_options`: Options array

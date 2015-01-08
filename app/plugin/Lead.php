@@ -61,7 +61,7 @@ class Lead extends Options {
 				$this->options = $this->get_options();
 
 				// Check if plugin or debug mode is enabled
-				if ( $this->options->status === 'Enabled' || $this->options->debug === 'Enabled' ) {
+				if ( $this->options['status'] === 'Enabled' || $this->options['debug'] === 'Enabled' ) {
 
 					// Get field posts
 					$posts = get_posts( array(
@@ -75,13 +75,18 @@ class Lead extends Options {
 					// Construct Lead data
 					$this->lead = $this->construct_lead( $this->fields, $this->post );
 
+					// Filter data
+					$this->lead    = apply_filters( 'rj_ml_lead', $this->lead );
+					$this->options = apply_filters( 'rj_ml_options', $this->options );
+
 					// If plugin enabled, create lead
-					if ( $this->options->status === 'Enabled' ) {
+					if ( $this->options['status'] === 'Enabled' ) {
 						$this->create_lead( $this->lead, $this->options );
+						do_action( 'rj_ml_lead_created', $this->lead, $this->options );
 					}
 
 					// If debug enabled, show debug info
-					if ( $this->options->debug === 'Enabled' && \is_user_logged_in() )  {
+					if ( $this->options['debug'] === 'Enabled' && \is_user_logged_in() )  {
 						require 'DebugView.php';
 						die;
 					}
@@ -187,7 +192,7 @@ class Lead extends Options {
 		}
 
 		// Add default fields to lead — submitted values take priority!
-		$lead = array_merge( $this->get_default_fields( $this->options->default_fields ), $lead );
+		$lead = array_merge( $this->get_default_fields( $this->options['default_fields'] ), $lead );
 
 		return $lead;
 
