@@ -11,6 +11,12 @@ namespace RichJenks\MarketoLeads;
 class Lead extends Options {
 
 	/**
+	 * @var array Sanitized $_POST array
+	 */
+
+	private $post;
+
+	/**
 	 * @var array Field post data
 	 */
 
@@ -48,6 +54,9 @@ class Lead extends Options {
 				&& $GLOBALS['pagenow'] !== 'wp-register.php'
 			) {
 
+				// Sanitize $_POST
+				$this->post = $this->post2name( $_POST );
+
 				// Get API options
 				$this->options = $this->get_options();
 
@@ -64,7 +73,7 @@ class Lead extends Options {
 					$this->fields = $this->sanitize_posts( $posts );
 
 					// Construct Lead data
-					$this->lead = $this->construct_lead( $this->fields, $_POST );
+					$this->lead = $this->construct_lead( $this->fields, $this->post );
 
 					// If plugin enabled, create lead
 					if ( $this->options->status === 'Enabled' ) {
@@ -122,10 +131,6 @@ class Lead extends Options {
 	 */
 
 	private function construct_lead( $fields, $posted ) {
-
-		/**
-		 * @todo Flatten array here to accommodate for multidimentional field names
-		 */
 
 		// Array to return
 		$lead = array();
@@ -227,47 +232,65 @@ class Lead extends Options {
 	}
 
 	/**
+	 * post2name
+	 *
+	 * Converts a $_POST array to a flat array of the form element `name`s which would have produced it.
+	 *
+	 * For example, the PHP array:
+	 *
+	 *     'foo' => 'bar',
+	 *     'baz' => [
+	 *         'foo' => 'bar',
+	 *     ],
+	 *
+	 * would turn into:
+	 *
+	 *     'foo' => 'bar',
+	 *     'baz[foo]' => 'bar',
+	 *
+	 * @param  array $array Array to be converted
+	 * @return array Flat array of HTML `name`s
+	 */
+
+	private function post2name( $array ) {
+		$result = array();
+		$array = $this->flatten_array( $array );
+		foreach ( $array as $key => $value ) {
+			$parts = explode( '.', $key );
+			$i = 0;
+			$new_key = '';
+			foreach ( $parts as $part ) {
+				if ( $i !== 0 ) $part = '[' . $part . ']';
+				$new_key .= $part;
+				$i++;
+			}
+			$i = 0;
+			$result[ $new_key ] = $value;
+		}
+		return $result;
+	}
+
+	/**
 	 * flatten_array
 	 *
-	 * Generates a flat array from a multidimentional array by concatenating keys
+	 * Turns a multi-dimensional array into a flat one separated by dots
 	 *
-	 * @see http://stackoverflow.com/a/9546215/1562799
+	 * @param array $array Array to be flattened
+	 * @param string $prefix Received previous value from recursive call
 	 *
-	 * @param array $multi Multidimentional array
 	 * @return array Flat array
 	 */
 
-	private function flatten_array( $multi, $prefix = '' ) {
-
-		$flat = array();
-
-		// Flatten array by recursively running this function
-		foreach ( $multi as $key => $value ) {
-
-			// TEST
-			$suffix = '';
-
+	private function flatten_array( $array, $prefix = '' ) {
+		$result = array();
+		foreach( $array as $key => $value ) {
 			if ( is_array( $value ) ) {
-
-				// $suffix = ( substr( $prefix, -1 ) === ']' ) ? '][' : '[';
-
-				// If array, call this function to flatten it
-				$flat = $flat + $this->flatten_array( $value, $prefix . $key . $suffix );
-
+				$result = $result + $this->flatten_array( $value, $prefix . $key . '.' );
 			} else {
-
-				// If prefix exists, it was originally an array item, so close it
-				$suffix = ( $prefix !== '' ) ? ']' : '';
-
-				// Not array, so just set it as is
-				$flat[ $prefix . $key . $suffix ] = $value;
-
+				$result[ $prefix . $key ] = $value;
 			}
-
 		}
-
-		return $flat;
-
+		return $result;
 	}
 
 }

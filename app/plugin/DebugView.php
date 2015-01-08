@@ -37,7 +37,7 @@ tr:nth-child(odd) { background: #d6eef6; }
 
 <h2>Post Data</h2>
 <table>
-	<?php foreach ( $_POST as $key => $value ): ?>
+	<?php foreach ( $this->post as $key => $value ): ?>
 		<tr>
 			<th scope="row"><?= $key; ?></th>
 			<td><pre><?= $value; ?></pre></td>
