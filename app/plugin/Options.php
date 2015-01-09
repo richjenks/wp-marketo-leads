@@ -64,11 +64,17 @@ class Options {
 
 	protected function set_options( $options ) {
 
-		// Remove invalid options
+		// Sanitize options
 		foreach ( $options as $option => $value ) {
+
+			// Remove invalid options
 			if ( !isset( $this->defaults[ $option ] ) ) {
 				unset( $options[ $option ] );
 			}
+
+			// Trim values
+			$options[ $option ] = trim( $value );
+
 		}
 
 		// Serialize & encrypt data
