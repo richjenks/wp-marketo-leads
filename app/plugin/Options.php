@@ -106,9 +106,9 @@ class Options {
 
 			// API Options
 			$api_options = array(
-				'client_id'     => $options->client_id,
-				'client_secret' => $options->client_secret,
-				'munchkin_id'   => $options->munchkin_id,
+				'client_id'     => $options['client_id'],
+				'client_secret' => $options['client_secret'],
+				'munchkin_id'   => $options['munchkin_id'],
 			);
 
 			// Create API client using Options class
@@ -118,7 +118,7 @@ class Options {
 			$lead = array( $lead );
 
 			// How to handle lead?
-			switch ( $options->action ) {
+			switch ( $options['action'] ) {
 
 				case 'Create only':
 					$response = $client->createLeads( $lead );
