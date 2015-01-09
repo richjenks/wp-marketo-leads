@@ -25,6 +25,7 @@ class Options {
 		'status' => 'Disabled',
 		'debug'  => 'Disabled',
 		'action' => 'Create/Update',
+		'hooks'  => 'wp_loaded',
 
 		// Default Fields
 		'default_fields' => '',
@@ -64,16 +65,21 @@ class Options {
 
 	protected function set_options( $options ) {
 
-		// Sanitize options
+		// Remove invalid options
 		foreach ( $options as $option => $value ) {
-
-			// Remove invalid options
 			if ( !isset( $this->defaults[ $option ] ) ) {
 				unset( $options[ $option ] );
 			}
+		}
+
+		// Other sanitization
+		foreach ( $options as $option => $value ) {
 
 			// Trim values
-			$options[ $option ] = trim( $value );
+			$options[ $option ] = trim( $options[ $option ] );
+
+			// Trim multiline values
+			$options[ $option ] = $this->format_tabular_data( $options[ $option ], "\n", '|' );
 
 		}
 
@@ -82,6 +88,44 @@ class Options {
 
 		update_option( 'rj_ml_options', $options );
 
+	}
+
+	/**
+	 * format_tabular_data
+	 *
+	 * Fixes whitespace issues in tabular plaintext data
+	 *
+	 * @param string $data Plaintext data
+	 * @param string $line_sep Line separator
+	 * @param string $cell_sep Cell separator
+	 *
+	 * @return string Formatted data
+	 */
+
+	protected function format_tabular_data( $data, $line_sep = false, $cell_sep = false ) {
+		if ( $line_sep && strpos( $data, $line_sep ) !== false ) {
+			$lines = explode( $line_sep, $data );
+			foreach ( $lines as $line_key => $line_value ) {
+				$lines[ $line_key ] = trim( $lines[ $line_key ] );
+				if ( $lines[ $line_key ] === '' ) {
+					unset( $lines[ $line_key ] );
+				} else {
+					$lines[ $line_key ] = preg_replace( '!\s+!', ' ', $lines[ $line_key ] );
+					if ( $cell_sep && strpos( $lines[ $line_key ], $cell_sep ) !== false ) {
+						$cells = explode( $cell_sep, $lines[ $line_key ] );
+						foreach ( $cells as $cell_key => $cell_value ) {
+							$cells[ $cell_key ] = trim( $cell_value );
+						}
+						$lines[ $line_key ] = implode( $cell_sep, $cells );
+						if ( $cell_sep !== ' ' ) {
+							$lines[ $line_key ] = str_replace( $cell_sep, ' ' . $cell_sep . ' ', $lines[ $line_key ]);
+						}
+					}
+				}
+			}
+			$data = implode( $line_sep, $lines );
+		}
+		return $data;
 	}
 
 	/**

@@ -45,57 +45,81 @@ class Lead extends Options {
 
 	public function __construct() {
 
-		add_action( 'wp_loaded', function () {
+		// Used to ensure we only run once
+		$GLOBALS['rj_ml_run'] = false;
 
-			if (
-				!empty( $_POST )
-				&& !is_admin()
-				&& $GLOBALS['pagenow'] !== 'wp-login.php'
-				&& $GLOBALS['pagenow'] !== 'wp-register.php'
-			) {
+		$hooks = explode( "\n", $this->options['hooks'] );
 
-				// Sanitize $_POST
-				$this->post = $this->post2name( $_POST );
+		foreach ( $hooks as $hook ) {
+			add_action( trim( $hook ), array( $this, 'start' ) );
+		}
 
-				// Get API options
-				$this->options = $this->get_options();
 
-				// Check if plugin or debug mode is enabled
-				if ( $this->options['status'] === 'Enabled' || $this->options['debug'] === 'Enabled' ) {
+	}
 
-					// Get field posts
-					$posts = get_posts( array(
-						'posts_per_page' => -1,
-						'post_type'      => 'rj_ml_cpt_fields',
-					) );
+	/**
+	 * start
+	 *
+	 * Starts the lead creation process
+	 * Hooks added in constructor
+	 */
 
-					// Sanitize field data so it's usable
-					$this->fields = $this->sanitize_posts( $posts );
+	public function start() {
 
-					// Construct Lead data
-					$this->lead = $this->construct_lead( $this->fields, $this->post );
+		/**
+		 * Only run if:
+		 *
+		 * 1. We hanve't run already
+		 * 2. Data is posted
+		 * 3. We're in the front-end
+		 */
+		if (
+			!empty( $_POST )
+			&& !is_admin()
+			&& $GLOBALS['pagenow'] !== 'wp-login.php'
+			&& $GLOBALS['pagenow'] !== 'wp-register.php'
+		) {
 
-					// Filter data
-					$this->lead    = apply_filters( 'rj_ml_lead', $this->lead );
-					$this->options = apply_filters( 'rj_ml_options', $this->options );
+			// Sanitize $_POST
+			$this->post = $this->post2name( $_POST );
 
-					// If plugin enabled, create lead
-					if ( $this->options['status'] === 'Enabled' ) {
-						$this->create_lead( $this->lead, $this->options );
-						do_action( 'rj_ml_lead_created', $this->lead, $this->options );
-					}
+			// Get API options
+			$this->options = $this->get_options();
 
-					// If debug enabled, show debug info
-					if ( $this->options['debug'] === 'Enabled' && \is_user_logged_in() )  {
-						require 'DebugView.php';
-						die;
-					}
+			// Check if plugin or debug mode is enabled
+			if ( $this->options['status'] === 'Enabled' || $this->options['debug'] === 'Enabled' ) {
 
+				// Get field posts
+				$posts = get_posts( array(
+					'posts_per_page' => -1,
+					'post_type'      => 'rj_ml_cpt_fields',
+				) );
+
+				// Sanitize field data so it's usable
+				$this->fields = $this->sanitize_posts( $posts );
+
+				// Construct Lead data
+				$this->lead = $this->construct_lead( $this->fields, $this->post );
+
+				// Filter data
+				$this->lead    = apply_filters( 'rj_ml_lead', $this->lead );
+				$this->options = apply_filters( 'rj_ml_options', $this->options );
+
+				// If plugin enabled, create lead
+				if ( $this->options['status'] === 'Enabled' ) {
+					$this->create_lead( $this->lead, $this->options );
+					do_action( 'rj_ml_lead_created', $this->lead, $this->options );
+				}
+
+				// If debug enabled, show debug info
+				if ( $this->options['debug'] === 'Enabled' && \is_user_logged_in() )  {
+					require 'DebugView.php';
+					die;
 				}
 
 			}
 
-		} );
+		}
 
 	}
 

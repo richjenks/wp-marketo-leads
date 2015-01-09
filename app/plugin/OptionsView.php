@@ -98,6 +98,17 @@
 				</td>
 			</tr>
 
+			<?php // Hooks ?>
+			<tr>
+				<th scope="row">
+					<label for="hooks">Hooks</label>
+				</th>
+				<td>
+					<textarea name="hooks" id="hooks" placeholder="Hooks" required><?=$this->options['hooks'];?></textarea>
+					<p class="description">When to check for posted form, one per line. See readme for more details.</p>
+				</td>
+			</tr>
+
 		</table>
 
 		<?php // Default Fields ?>
@@ -105,7 +116,7 @@
 		<h3>Default Fields</h3>
 		<p class="description">Added to every lead but overwritten by user-provided data.</p>
 		<textarea rows="7" cols="70" name="default_fields" id="default_fields" placeholder="Default Fields"><?=$this->options['default_fields'];?></textarea>
-		<p class="description">One per line. Separate Marketo field and value by a pipe "|" character, e.g. "leadSource | Website".</p>
+		<p class="description">One per line. Separate Marketo field and value by a pipe "|", e.g. "leadSource | Website".</p>
 
 		<?php // Submit ?>
 		<input type="hidden" name="rj_ml_options_submitted">

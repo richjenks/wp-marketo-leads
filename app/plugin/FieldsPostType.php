@@ -8,7 +8,7 @@
 
 namespace RichJenks\MarketoLeads;
 
-class FieldsPostType {
+class FieldsPostType extends Options {
 
 	/**
 	 * @var string Post Type
@@ -38,16 +38,14 @@ class FieldsPostType {
 			wp_enqueue_style( 'rj_ml_cpt_icon' );
 		} );
 
-		// Things specific to post type
+		// Rename things
 		if ( $this->get_post_type() === $this->post_type ) {
-
-			// Rename things
 			$this->rename();
-
-			// Sanitize data on save
-			$this->sanitize_save();
-
 		}
+
+		// Sanitize data on save
+		$this->sanitize_save();
+
 
 	}
 
@@ -133,7 +131,7 @@ class FieldsPostType {
 			$strings = array(
 				'Enter title here' => 'Marketo field',
 				'Excerpt'          => 'Form fields',
-				'Excerpts are optional hand-crafted summaries of your content that can be used in your theme. <a href="http://codex.wordpress.org/Excerpt" target="_blank">Learn more about manual excerpts.</a>' => '<code>name</code> or <code>id</code> of form field in HTML. One per line, spaces are ignored. You can add a comment after a slash to remind you where the field came from, e.g. <code>field_name / Contact form</code>.',
+				'Excerpts are optional hand-crafted summaries of your content that can be used in your theme. <a href="http://codex.wordpress.org/Excerpt" target="_blank">Learn more about manual excerpts.</a>' => 'One per line. Separate <code>name</code> and comment by a pipe "|", e.g. "field_name | Contact form".',
 			);
 			foreach ( $strings as $old => $new ) if ( $text === $old ) return $new;
 			return $translation;
@@ -148,23 +146,39 @@ class FieldsPostType {
 	 */
 
 	private function sanitize_save() {
+		add_filter( 'wp_insert_post_data', function ( $data, $postarr ) {
+			if ( $data['post_type'] == $this->post_type ) {
 
-		add_filter( 'wp_insert_post_data', function( $data , $postarr ) {
+				// Title
+				$data['post_title'] = trim( $data['post_title'] );
+
+				// Excerpt
+				$data['post_excerpt'] = $this->format_tabular_data( $data['post_excerpt'], "\n", '|' );
+
+			}
+			return $data;
+		}, '99', 2 );
+
+		// add_filter( 'wp_insert_post_data', function ( $data, $postarr ) {
 
 			// Title
-			$data['post_title'] = trim( $data['post_title'] );
+			// $data['post_title'] = trim( $data['post_title'] );
+			// $data['post_title'] = 'lol';
 
 			// Excerpt
-			$lines = explode( "\n", $data['post_excerpt'] );
-			foreach ( $lines as $key => $line ) {
-				$lines[ $key ] = trim( $line );
-				if ( $lines[ $key ] === '' ) unset( $lines[ $key ] );
-			}
-			$data['post_excerpt'] = implode( "\n", $lines);
+			// $data['post_excerpt'] = format_tabular_data( $data['post_excerpt'], "\n", '|' );
 
-			return $data;
+			// var_dump( $data['post_excerpt'] );
+			// $lines = explode( "\n", $data['post_excerpt'] );
+			// foreach ( $lines as $key => $line ) {
+			// 	$lines[ $key ] = trim( $line );
+			// 	if ( $lines[ $key ] === '' ) unset( $lines[ $key ] );
+			// }
+			// $data['post_excerpt'] = implode( "\n", $lines);
 
-		}, 99, 2 );
+			// return $data;
+
+		// }, 99, 2 );
 
 	}
 
