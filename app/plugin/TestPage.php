@@ -32,7 +32,14 @@ class TestPage extends Options {
 
 		// Add submenu page
 		// add_action( 'admin_menu', function() {
-		// 	add_submenu_page( 'edit.php?post_type=' . $this->post_type, 'Test API', 'Test API', 'manage_options', 'rj_ml_test', array( $this, 'content' ) );
+		// 	add_submenu_page(
+		// 		'edit.php?post_type=' . $this->post_type,
+		// 		'Test API',
+		// 		'Test API',
+		// 		'manage_options',
+		// 		'rj_ml_test',
+		// 		array( $this, 'content' )
+		// 	);
 		// } );
 
 		// Get current values

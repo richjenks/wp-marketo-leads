@@ -149,7 +149,7 @@ class Options {
 	/**
 	 * encrypt
 	 *
-	 * @see http://wordpress.stackexchange.com/questions/25062/how-to-store-username-and-password-to-api-in-wordpress-option-db
+	 * @see http://wordpress.stackexchange.com/questions/25062/
 	 *
 	 * @param string $input_string Text to be encrypted
 	 * @param string $key Encryption key (use `AUTH_KEY`)
@@ -161,13 +161,19 @@ class Options {
 		$iv_size = mcrypt_get_iv_size( MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB );
 		$iv = mcrypt_create_iv( $iv_size, MCRYPT_RAND );
 		$h_key = hash( 'sha256', $key, TRUE );
-		return base64_encode( mcrypt_encrypt( MCRYPT_RIJNDAEL_256, $h_key, $input_string, MCRYPT_MODE_ECB, $iv ) );
+		return base64_encode( mcrypt_encrypt(
+			MCRYPT_RIJNDAEL_256,
+			$h_key,
+			$input_string,
+			MCRYPT_MODE_ECB,
+			$iv
+		) );
 	}
 
 	/**
 	 * decrypt
 	 *
-	 * @see http://wordpress.stackexchange.com/questions/25062/how-to-store-username-and-password-to-api-in-wordpress-option-db
+	 * @see http://wordpress.stackexchange.com/questions/25062/
 	 *
 	 * @param string $encrypted_input_string Encrypted data
 	 * @param string $key Encryption key (use `AUTH_KEY`)
@@ -179,7 +185,13 @@ class Options {
 		$iv_size = mcrypt_get_iv_size( MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB );
 		$iv = mcrypt_create_iv( $iv_size, MCRYPT_RAND );
 		$h_key = hash( 'sha256', $key, TRUE );
-		return trim( mcrypt_decrypt( MCRYPT_RIJNDAEL_256, $h_key, base64_decode( $encrypted_input_string ), MCRYPT_MODE_ECB, $iv ) );
+		return trim( mcrypt_decrypt(
+			MCRYPT_RIJNDAEL_256,
+			$h_key,
+			base64_decode( $encrypted_input_string ),
+			MCRYPT_MODE_ECB,
+			$iv
+		) );
 	}
 
 }

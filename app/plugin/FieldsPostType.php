@@ -29,7 +29,12 @@ class FieldsPostType {
 
 		// Custom icon
 		add_action( 'admin_enqueue_scripts', function() {
-			wp_register_style( 'rj_ml_cpt_icon', \plugins_url() . '/wp-marketo-leads/app/assets/style.css', false, '1.0.0' );
+			wp_register_style(
+				'rj_ml_cpt_icon',
+				\plugins_url() . '/wp-marketo-leads/app/assets/style.css',
+				false,
+				'1.0.0'
+			);
 			wp_enqueue_style( 'rj_ml_cpt_icon' );
 		} );
 
