@@ -30,7 +30,7 @@ class OptionsPage extends Options {
 				'edit.php?post_type=' . $this->post_type,
 				'Options',
 				'Options',
-				'manage_options',
+				apply_filters( 'rj_ml_capability', 'manage_options' ),
 				'rj_ml_options',
 				array( $this, 'content' )
 			);

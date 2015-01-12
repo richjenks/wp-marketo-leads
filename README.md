@@ -48,12 +48,13 @@ The remaining sections are hooks exposed by the plugin that developers can use t
 
 ### Actions
 
-- `before_create_lead`: Immediately before creating a lead
-- `after_create_lead`: Immediately after creating a lead
+- `rj_ml_before_create_lead`: Immediately before creating a lead
+- `rj_ml_after_create_lead`: Immediately after creating a lead
 
 ### Filters
 
-- `lead`: Lead data before creating lead/debug
-- `options`: Options before creating lead/debug
-- `hooks`: Array of hooks to run on
-- `save_options`: Options before they are saved
+- `rj_ml_lead`: Lead data before creating lead/debug
+- `rj_ml_options`: Options before creating lead/debug
+- `rj_ml_hooks`: Array of hooks to run on
+- `rj_ml_save_options`: Options before they are saved
+- `rj_ml_capability`: Capability required to edit Marketo options

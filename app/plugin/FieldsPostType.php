@@ -65,7 +65,15 @@ class FieldsPostType extends Options {
 			'show_in_menu'       => true,
 			'query_var'          => true,
 			'rewrite'            => false,
-			'capability_type'    => 'post',
+			'capabilities' => array(
+				'edit_post'          => apply_filters( 'rj_ml_capability', 'manage_options' ),
+				'read_post'          => apply_filters( 'rj_ml_capability', 'manage_options' ),
+				'delete_post'        => apply_filters( 'rj_ml_capability', 'manage_options' ),
+				'edit_posts'         => apply_filters( 'rj_ml_capability', 'manage_options' ),
+				'edit_others_posts'  => apply_filters( 'rj_ml_capability', 'manage_options' ),
+				'publish_posts'      => apply_filters( 'rj_ml_capability', 'manage_options' ),
+				'read_private_posts' => apply_filters( 'rj_ml_capability', 'manage_options' )
+			),
 			'has_archive'        => false,
 			'hierarchical'       => false,
 			'menu_position'      => null,
