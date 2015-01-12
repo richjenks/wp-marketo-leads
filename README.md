@@ -48,9 +48,12 @@ The remaining sections are hooks exposed by the plugin that developers can use t
 
 ### Actions
 
-- `rj_ml_lead_created`: Immediately after creating a lead, receives lead data and options arrays
+- `before_create_lead`: Immediately before creating a lead
+- `after_create_lead`: Immediately after creating a lead
 
 ### Filters
 
-- `rj_ml_lead`: Constructed lead data
-- `rj_ml_options`: Options array
+- `lead`: Lead data before creating lead/debug
+- `options`: Options before creating lead/debug
+- `hooks`: Array of hooks to run on
+- `save_options`: Options before they are saved

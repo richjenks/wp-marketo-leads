@@ -97,6 +97,9 @@ class Options {
 
 		}
 
+		// Apply filter
+		$options = apply_filters( 'rj_ml_save_options', $options );
+
 		// Serialize & encrypt data
 		$options = $this->encrypt( json_encode( $options ), AUTH_KEY );
 

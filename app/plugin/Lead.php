@@ -42,7 +42,9 @@ class Lead extends Options {
 		// Used to ensure we only run once
 		$GLOBALS['rj_ml_ran'] = false;
 
+		// When to run...
 		$hooks = explode( "\n", $this->get_options( 'hooks' ) );
+		$hooks = apply_filters( 'rj_ml_hooks', $hooks );
 
 		foreach ( $hooks as $hook ) {
 			add_action( trim( $hook ), function () use ( $hook ) {
@@ -103,9 +105,19 @@ class Lead extends Options {
 
 				// If plugin enabled, create lead
 				if ( $this->options['status'] === 'Enabled' ) {
+
+					// Before create lead hook
+					do_action( 'rj_ml_before_create_lead', $this->lead, $this->options );
+
+					// Create the lead
 					$this->create_lead( $this->lead, $this->options );
-					do_action( 'rj_ml_lead_created', $this->lead, $this->options );
-					$GLOBALS['rj_ml_ran'] = true; // So we don't run again
+
+					// After create lead hook
+					do_action( 'rj_ml_after_create_lead', $this->lead, $this->options );
+
+					// So it only runs once!
+					$GLOBALS['rj_ml_ran'] = true;
+
 				}
 
 				// If debug enabled, show debug info
