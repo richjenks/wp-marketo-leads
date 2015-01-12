@@ -17,12 +17,6 @@ class OptionsPage extends Options {
 	private $post_type = 'rj_ml_cpt_fields';
 
 	/**
-	 * @var array Options array
-	 */
-
-	private $options;
-
-	/**
 	 * __construct
 	 *
 	 * Start the magic...

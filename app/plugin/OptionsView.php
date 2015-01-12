@@ -104,7 +104,7 @@
 					<label for="hooks">Hooks</label>
 				</th>
 				<td>
-					<textarea name="hooks" id="hooks" placeholder="Hooks" required><?=$this->options['hooks'];?></textarea>
+					<textarea name="hooks" id="hooks" rows="3" placeholder="Hooks" required><?=$this->options['hooks'];?></textarea>
 					<p class="description">When to check for posted form, one per line. See readme for more details.</p>
 				</td>
 			</tr>

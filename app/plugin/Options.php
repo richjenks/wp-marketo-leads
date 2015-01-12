@@ -11,6 +11,12 @@ namespace RichJenks\MarketoLeads;
 class Options {
 
 	/**
+	 * @var array Current options
+	 */
+
+	protected $options = false;
+
+	/**
 	 * @var array Default options
 	 */
 
@@ -38,22 +44,30 @@ class Options {
 	 * @return array Plugin options
 	 */
 
-	protected function get_options() {
+	protected function get_options( $option = false ) {
 
-		// Get encrypted options
-		$options = get_option( 'rj_ml_options', '[]' );
+		// If options not constructed, get them
+		if ( !$this->options ) {
 
-		// If stored options are returned, decrypt them
-		if ( $options !== '[]' ) $options = $this->decrypt( $options, AUTH_KEY );
+			// Get encrypted options
+			$options = get_option( 'rj_ml_options', '[]' );
 
-		// If first character not `{`, decryption failed and should revert to defaults
-		if ( substr( $options, 0, 1 ) !== '{' ) $options = '[]';
+			// If stored options are returned, decrypt them
+			if ( $options !== '[]' ) $options = $this->decrypt( $options, AUTH_KEY );
 
-		// Convert to array
-		$options = json_decode( $options, true );
+			// If first character not `{`, decryption failed and should revert to defaults
+			if ( substr( $options, 0, 1 ) !== '{' ) $options = '[]';
 
-		// Return merged options
-		return array_replace_recursive( $this->defaults, $options );
+			// Convert to array
+			$options = json_decode( $options, true );
+
+			// Save merged options
+			$this->options = array_replace_recursive( $this->defaults, $options );
+
+		}
+
+		// Return specific option or all options
+		return ( $option ) ? $this->options[ $option ] : $this->options;
 
 	}
 

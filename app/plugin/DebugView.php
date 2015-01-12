@@ -6,10 +6,12 @@
  * HTML for debug information
  */
 
+$debug_options = $this->get_options();
+
 // Sanitize options for viewing
-unset( $this->options['submit'] );
-unset( $this->options['client_secret'] );
-unset( $this->options['rj_ml_options_submitted'] );
+unset( $debug_options['submit'] );
+unset( $debug_options['client_secret'] );
+unset( $debug_options['rj_ml_options_submitted'] );
 ?>
 
 <style>
@@ -26,7 +28,7 @@ tr:nth-child(odd) { background: #d6eef6; }
 
 <h2>Plugin Options</h2>
 <table>
-	<?php foreach ( $this->options as $option => $value ): ?>
+	<?php foreach ( $debug_options as $option => $value ): ?>
 		<tr>
 			<th scope="row"><?= $option; ?></th>
 			<td><pre><?php
@@ -76,7 +78,7 @@ tr:nth-child(odd) { background: #d6eef6; }
 
 <h2>Default Fields</h2>
 <table>
-	<?php $fields = $this->get_default_fields( $this->options['default_fields'] ); ?>
+	<?php $fields = $this->get_default_fields( $debug_options['default_fields'] ); ?>
 	<?php foreach ( $fields as $key => $value ): ?>
 		<tr>
 			<th scope="row"><?= $key; ?></th>

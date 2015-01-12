@@ -29,12 +29,6 @@ class Lead extends Options {
 	private $lead;
 
 	/**
-	 * @var array API options
-	 */
-
-	private $options;
-
-	/**
 	 * __construct
 	 *
 	 * Don't do anything until `wp_loaded`!
@@ -46,14 +40,15 @@ class Lead extends Options {
 	public function __construct() {
 
 		// Used to ensure we only run once
-		$GLOBALS['rj_ml_run'] = false;
+		$GLOBALS['rj_ml_ran'] = false;
 
-		$hooks = explode( "\n", $this->options['hooks'] );
+		$hooks = explode( "\n", $this->get_options( 'hooks' ) );
 
 		foreach ( $hooks as $hook ) {
-			add_action( trim( $hook ), array( $this, 'start' ) );
+			add_action( trim( $hook ), function () use ( $hook ) {
+				$this->start( $hook );
+			} );
 		}
-
 
 	}
 
@@ -64,7 +59,7 @@ class Lead extends Options {
 	 * Hooks added in constructor
 	 */
 
-	public function start() {
+	public function start( $hook ) {
 
 		/**
 		 * Only run if:
@@ -74,7 +69,8 @@ class Lead extends Options {
 		 * 3. We're in the front-end
 		 */
 		if (
-			!empty( $_POST )
+			!$GLOBALS['rj_ml_ran']
+			&& !empty( $_POST )
 			&& !is_admin()
 			&& $GLOBALS['pagenow'] !== 'wp-login.php'
 			&& $GLOBALS['pagenow'] !== 'wp-register.php'
@@ -109,6 +105,7 @@ class Lead extends Options {
 				if ( $this->options['status'] === 'Enabled' ) {
 					$this->create_lead( $this->lead, $this->options );
 					do_action( 'rj_ml_lead_created', $this->lead, $this->options );
+					$GLOBALS['rj_ml_ran'] = true; // So we don't run again
 				}
 
 				// If debug enabled, show debug info
