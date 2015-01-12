@@ -195,8 +195,8 @@ class Lead extends Options {
 					foreach ( $element_names as $element_name ) {
 
 						// Remove comment (if present)
-						if ( strpos( $element_name, '/' ) !== false ) {
-							$parts = explode( '/' , $element_name );
+						if ( strpos( $element_name, '|' ) !== false ) {
+							$parts = explode( '|' , $element_name );
 							$element_name = trim( $parts[0] );
 						}
 
