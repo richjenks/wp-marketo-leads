@@ -94,7 +94,7 @@ class FieldsPostType extends Options {
 			'singular_name'      => _x( 'Marketo Field', 'post type singular name', 'richjenks_marketoleads' ),
 			'menu_name'          => _x( 'Marketo', 'admin menu', 'richjenks_marketoleads' ),
 			'name_admin_bar'     => _x( 'Marketo Field', 'add new on admin bar', 'richjenks_marketoleads' ),
-			'add_new'            => _x( 'Add New', 'Field', 'richjenks_marketoleads' ),
+			'add_new'            => _x( 'Add Field', 'Field', 'richjenks_marketoleads' ),
 			'all_items'          => __( 'All Fields', 'richjenks_marketoleads' ),
 			'add_new_item'       => __( 'Add Field', 'richjenks_marketoleads' ),
 			'new_item'           => __( 'New Field', 'richjenks_marketoleads' ),
