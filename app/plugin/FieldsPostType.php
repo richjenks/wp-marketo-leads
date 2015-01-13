@@ -56,6 +56,7 @@ class FieldsPostType extends Options {
 	 */
 
 	private function get_args() {
+		$capability = apply_filters( 'rj_ml_capability', 'manage_options' );
 		return array(
 			'labels'             => $this->get_labels(),
 			'public'             => false,
@@ -66,13 +67,13 @@ class FieldsPostType extends Options {
 			'query_var'          => true,
 			'rewrite'            => false,
 			'capabilities' => array(
-				'edit_post'          => apply_filters( 'rj_ml_capability', 'manage_options' ),
-				'read_post'          => apply_filters( 'rj_ml_capability', 'manage_options' ),
-				'delete_post'        => apply_filters( 'rj_ml_capability', 'manage_options' ),
-				'edit_posts'         => apply_filters( 'rj_ml_capability', 'manage_options' ),
-				'edit_others_posts'  => apply_filters( 'rj_ml_capability', 'manage_options' ),
-				'publish_posts'      => apply_filters( 'rj_ml_capability', 'manage_options' ),
-				'read_private_posts' => apply_filters( 'rj_ml_capability', 'manage_options' )
+				'edit_post'          => $capability,
+				'read_post'          => $capability,
+				'delete_post'        => $capability,
+				'edit_posts'         => $capability,
+				'edit_others_posts'  => $capability,
+				'publish_posts'      => $capability,
+				'read_private_posts' => $capability
 			),
 			'has_archive'        => false,
 			'hierarchical'       => false,
