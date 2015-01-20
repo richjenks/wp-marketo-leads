@@ -52,8 +52,10 @@ class Options {
 			// Get encrypted options
 			$options = get_option( 'rj_ml_options', '[]' );
 
-			// If stored options are returned, decrypt them
-			if ( $options !== '[]' ) $options = $this->decrypt( $options, AUTH_KEY );
+			// If stored options are returned and are encrypted, decrypt them
+			if ( $options !== '[]' && substr( $options, 0, 1 ) !== '{' ) {
+				$options = $this->decrypt( $options, AUTH_KEY );
+			}
 
 			// If first character not `{`, decryption failed and should revert to defaults
 			if ( substr( $options, 0, 1 ) !== '{' ) $options = '[]';
