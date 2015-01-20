@@ -2,9 +2,9 @@
 
 /**
  * Plugin Name: Marketo Leads
- * Plugin URI: https://github.com/richjenks/wp-marketo-leads
+ * Plugin URI: https://bitbucket.org/richjenks/wp-marketo-leads
  * Description: Create a lead in Marketo from any form!
- * Version: 1.0
+ * Version: 2.0.0
  * Author: Rich Jenks <rich@richjenks.com>
  * Author URI: http://richjenks.com
  * License: GPL2
