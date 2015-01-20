@@ -81,11 +81,8 @@ class Lead extends Options {
 			// Sanitize $_POST
 			$this->post = $this->post2name( $_POST );
 
-			// Get API options
-			$this->options = $this->get_options();
-
 			// Check if plugin or debug mode is enabled
-			if ( $this->options['status'] === 'Enabled' || $this->options['debug'] === 'Enabled' ) {
+			if ( $this->get_options( 'status' ) === 'Enabled' || $this->get_options( 'debug' ) === 'Enabled' ) {
 
 				// Get field posts
 				$posts = get_posts( array(
@@ -99,21 +96,24 @@ class Lead extends Options {
 				// Construct Lead data
 				$this->lead = $this->construct_lead( $this->fields, $this->post );
 
+				// From here on, options are in a flat var for filtering, etc.
+				$options = $this->get_options();
+
 				// Filter data
-				$this->lead    = apply_filters( 'rj_ml_lead', $this->lead );
-				$this->options = apply_filters( 'rj_ml_options', $this->options );
+				$this->lead = apply_filters( 'rj_ml_lead', $this->lead );
+				$options    = apply_filters( 'rj_ml_options', $options );
 
 				// If plugin enabled, create lead
-				if ( $this->options['status'] === 'Enabled' ) {
+				if ( $options['status'] === 'Enabled' ) {
 
 					// Before create lead hook
-					do_action( 'rj_ml_before_create_lead', $this->lead, $this->options );
+					do_action( 'rj_ml_before_create_lead', $this->lead, $options );
 
 					// Create the lead
-					$this->create_lead( $this->lead, $this->options );
+					$this->create_lead( $this->lead, $options );
 
 					// After create lead hook
-					do_action( 'rj_ml_after_create_lead', $this->lead, $this->options );
+					do_action( 'rj_ml_after_create_lead', $this->lead, $options );
 
 					// So it only runs once!
 					$GLOBALS['rj_ml_ran'] = true;
@@ -121,7 +121,7 @@ class Lead extends Options {
 				}
 
 				// If debug enabled, show debug info
-				if ( $this->options['debug'] === 'Enabled' && \is_user_logged_in() )  {
+				if ( $options['debug'] === 'Enabled' && \is_user_logged_in() )  {
 					require 'DebugView.php';
 					die;
 				}
