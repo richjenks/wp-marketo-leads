@@ -217,10 +217,8 @@ class Options {
 
 			}
 
-			// var_dump( $response );
-			// $response = $this->return_echo( 'print_r', $response );
+			// Logging
 			$response = explode( "\n", print_r( $response, true ) );
-			// var_dump( $response );
 			$this->log( LogLevel::INFO, 'Lead submitted:', $lead );
 			$this->log( LogLevel::DEBUG, 'API response:', $response );
 
