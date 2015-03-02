@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "037e71d6e13fc02d9f6884c43df81501",
+    "hash": "0c6213a3d949a4ad5182694955dd2867",
     "packages": [
         {
             "name": "commerceguys/guzzle-oauth2-plugin",
@@ -50,12 +50,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/dchesterton/marketo-rest-api.git",
-                "reference": "3504956ac7a741aadabcbbaef43741e2fbafe56d"
+                "reference": "1aeba3eb110a4c01f433d6e16ec045c7a3686748"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/dchesterton/marketo-rest-api/zipball/3504956ac7a741aadabcbbaef43741e2fbafe56d",
-                "reference": "3504956ac7a741aadabcbbaef43741e2fbafe56d",
+                "url": "https://api.github.com/repos/dchesterton/marketo-rest-api/zipball/1aeba3eb110a4c01f433d6e16ec045c7a3686748",
+                "reference": "1aeba3eb110a4c01f433d6e16ec045c7a3686748",
                 "shasum": ""
             },
             "require": {
@@ -79,7 +79,7 @@
                 }
             ],
             "description": "A PHP client for the Marketo.com REST API",
-            "time": "2014-12-23 00:48:19"
+            "time": "2015-02-03 13:52:24"
         },
         {
             "name": "guzzle/guzzle",
@@ -174,18 +174,108 @@
             "time": "2014-08-11 04:32:36"
         },
         {
+            "name": "katzgrau/klogger",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/katzgrau/klogger.git",
+                "reference": "46cdd92a9b4a8443120cc955bf831450cb274813"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/katzgrau/klogger/zipball/46cdd92a9b4a8443120cc955bf831450cb274813",
+                "reference": "46cdd92a9b4a8443120cc955bf831450cb274813",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3",
+                "psr/log": "1.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.0.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Katzgrau\\KLogger\\": "src/"
+                },
+                "classmap": [
+                    "src/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Dan Horrigan",
+                    "email": "dan@dhorrigan.com",
+                    "homepage": "http://dhorrigan.com",
+                    "role": "Lead Developer"
+                },
+                {
+                    "name": "Kenny Katzgrau",
+                    "email": "katzgrau@gmail.com"
+                }
+            ],
+            "description": "A Simple Logging Class",
+            "keywords": [
+                "logging"
+            ],
+            "time": "2014-03-20 02:36:36"
+        },
+        {
+            "name": "psr/log",
+            "version": "1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/log.git",
+                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "reference": "fe0936ee26643249e916849d48e3a51d5f5e278b",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Psr\\Log\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interface for logging libraries",
+            "keywords": [
+                "log",
+                "psr",
+                "psr-3"
+            ],
+            "time": "2012-12-21 11:40:51"
+        },
+        {
             "name": "symfony/event-dispatcher",
-            "version": "v2.6.3",
+            "version": "v2.6.4",
             "target-dir": "Symfony/Component/EventDispatcher",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/EventDispatcher.git",
-                "reference": "40ff70cadea3785d83cac1c8309514b36113064e"
+                "reference": "f75989f3ab2743a82fe0b03ded2598a2b1546813"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/40ff70cadea3785d83cac1c8309514b36113064e",
-                "reference": "40ff70cadea3785d83cac1c8309514b36113064e",
+                "url": "https://api.github.com/repos/symfony/EventDispatcher/zipball/f75989f3ab2743a82fe0b03ded2598a2b1546813",
+                "reference": "f75989f3ab2743a82fe0b03ded2598a2b1546813",
                 "shasum": ""
             },
             "require": {
@@ -229,7 +319,7 @@
             ],
             "description": "Symfony EventDispatcher Component",
             "homepage": "http://symfony.com",
-            "time": "2015-01-05 14:28:40"
+            "time": "2015-02-01 16:10:57"
         }
     ],
     "packages-dev": [],

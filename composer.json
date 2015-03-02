@@ -1,5 +1,6 @@
 {
     "require": {
+        "katzgrau/klogger": "1.0.0",
         "dchesterton/marketo-rest-api": "dev-master"
     },
     "config": {

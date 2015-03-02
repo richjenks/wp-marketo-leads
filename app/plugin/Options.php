@@ -8,6 +8,10 @@
 
 namespace RichJenks\MarketoLeads;
 
+use Psr\Log\LogLevel;
+use CSD\Marketo\Client;
+use Katzgrau\KLogger\Logger;
+
 class Options {
 
 	/**
@@ -15,6 +19,12 @@ class Options {
 	 */
 
 	protected $options = false;
+
+	/**
+	 * @var obj KLogger object
+	 */
+
+	protected $log = false;
 
 	/**
 	 * @var array Default options
@@ -181,7 +191,7 @@ class Options {
 			);
 
 			// Create API client using Options class
-			$client = \CSD\Marketo\Client::factory( $api_options );
+			$client = Client::factory( $api_options );
 
 			// Construct leads array (must be array of lead arrays for API)
 			$lead = array( $lead );
@@ -207,12 +217,34 @@ class Options {
 
 			}
 
+			// var_dump( $response );
+			// $response = $this->return_echo( 'print_r', $response );
+			$response = explode( "\n", print_r( $response, true ) );
+			// var_dump( $response );
+			$this->log( LogLevel::INFO, 'Lead submitted:', $lead );
+			$this->log( LogLevel::DEBUG, 'API response:', $response );
+
 			return $response;
 
 		}
 
 		return false;
 
+	}
+
+	/**
+	 * @param string $function Name of function to call
+	 * @param mixed $paramters,... Any number of parameters to pass to call
+	 *
+	 * @return string Content that would otherwise be echoed by the call
+	 */
+	protected function return_echo( $function ) {
+		$arguments = func_get_args();
+		array_shift( $arguments ); // Remove function name
+		ob_start();
+		call_user_func_array( $function, $arguments );
+		$return = ob_get_clean();
+		return $return;
 	}
 
 	/**
@@ -261,6 +293,45 @@ class Options {
 			MCRYPT_MODE_ECB,
 			$iv
 		) );
+	}
+
+	/**
+	 * Interface for KLogger
+	 * Stores logs in `/wp-content/logs` and prepends plugin name for so other plugins can share the folder
+	 *
+	 * @param string $level   Log level for message
+	 * @param string $message Message to be logged
+	 * @param array  $context Context of message
+	 */
+
+	protected function log( $level, $message, $context = [] ) {
+
+		// Ensure logger instance exists
+		if ( !$this->log ) $this->log = new Logger( __DIR__ . '/../logs/', LogLevel::DEBUG );
+
+		// Context must be array
+		if ( !is_array( $context ) ) $context = [ $context ];
+
+		// Email this log?
+		$levels = [
+			'emergency' => true,
+			'alert'     => true,
+			'critical'  => true,
+			'error'     => true,
+			'warning'   => true,
+			'notice'    => true,
+			'info'      => false,
+			'debug'     => false,
+		];
+		if ( $levels[ $level ] ) wp_mail(
+			get_option( 'admin_email' ),               // To
+			'[' . $level . '] from ' . get_site_url(), // Subject
+			$message                                   // Body
+		);
+
+		$this->log->log( $level, $message, $context );
+		// $this->log->log( 'debug', 'test', [ 'test' ] );
+
 	}
 
 }
