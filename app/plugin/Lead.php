@@ -46,6 +46,10 @@ class Lead extends Options {
 		$hooks = explode( "\n", $this->get_options( 'hooks' ) );
 		$hooks = apply_filters( 'rj_ml_hooks', $hooks );
 
+		/**
+		 * Start for each hook
+		 * Won't actually run if has already done so
+		 */
 		foreach ( $hooks as $hook ) {
 			add_action( trim( $hook ), function () use ( $hook ) {
 				$this->start( $hook );
@@ -61,19 +65,18 @@ class Lead extends Options {
 	 * Hooks added in constructor
 	 */
 
-	public function start( $hook ) {
+	public function start() {
 
 		/**
 		 * Only run if:
 		 *
-		 * 1. We hanve't run already
+		 * 1. We haven't run already
 		 * 2. Data is posted
-		 * 3. We're in the front-end
+		 * 3. Not on login or registration page
 		 */
 		if (
 			!$GLOBALS['rj_ml_ran']
 			&& !empty( $_POST )
-			&& !is_admin()
 			&& $GLOBALS['pagenow'] !== 'wp-login.php'
 			&& $GLOBALS['pagenow'] !== 'wp-register.php'
 		) {
