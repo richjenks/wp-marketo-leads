@@ -328,7 +328,6 @@ class Options {
 		);
 
 		$this->log->log( $level, $message, $context );
-		// $this->log->log( 'debug', 'test', [ 'test' ] );
 
 	}
 
