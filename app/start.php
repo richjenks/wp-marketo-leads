@@ -15,19 +15,6 @@ require 'vendor/autoload.php';
  */
 add_action( 'plugins_loaded', function () {
 
-	// Enqueue scripts placeholder
-	// add_action( 'wp_enqueue_scripts', function () {
-	// 	$name = 'wp-marketo-leads-scripts';
-	// 	wp_register_script(
-	// 		$name,
-	// 		plugins_url( 'assets/scripts.js', __FILE__ ),
-	// 		array('jquery'),
-	// 		'1.1',
-	// 		true
-	// 	);
-	// 	wp_enqueue_script( $name );
-	// } );
-
 	// Register Post Type
 	new RichJenks\MarketoLeads\FieldsPostType;
 
